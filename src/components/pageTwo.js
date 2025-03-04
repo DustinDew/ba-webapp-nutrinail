@@ -24,9 +24,8 @@ const FlippableCard = ({frontContent, backContent }) => {
 
 const PageTwo = ({changeScrollable}) => {
   const [processStarted, setProcessStarted] = useState(false);
-  const [key, setKey] = useState(0);
+  //const [key, setKey] = useState(0);
   const [boxVisible, setBoxVisible] = useState(false);
-  const [buttonVisible, setButtonVisible] = useState(false);
   const [start , setStart] = useState(false);
   const [showCard, setShowCard] = useState(false);
   const [restart, setRestart] = useState(false);
@@ -40,7 +39,7 @@ const PageTwo = ({changeScrollable}) => {
     changeScrollable(false);
     setTimeout(() => setBoxVisible(true), 50);
   };
-
+  /*
   const resetProcess = () => {
     if (window.confirm("Vorgang abbrechen?")) {
       navigator.mediaDevices.getUserMedia({ video: true })
@@ -49,7 +48,6 @@ const PageTwo = ({changeScrollable}) => {
           console.log("Kamera gestoppt!");
         })
         .catch((err) => console.log("Kein aktiver Kamerastream gefunden:", err));
-      setButtonVisible(false);
       setBoxVisible(false);
       changeScrollable(true);
       setTimeout(() => {
@@ -61,7 +59,7 @@ const PageTwo = ({changeScrollable}) => {
       setRestart(true);
     };
   };
-
+ */
   return (
     <div className="main-container">
 
@@ -90,10 +88,10 @@ const PageTwo = ({changeScrollable}) => {
         <div className={`box ${boxVisible ? "fade-in" : "fade-out"}`}>
           {showCard && (
           <>
-            <Dialog updateTargetCoordsLeft={(arr) => setTargetCoordsLeft(arr)} updateTargetCoordsRight={(arr) => setTargetCoordsRight(arr)} changeScrollable={() => changeScrollable(true)} changeShowCV={() => setShowCameraView(true)} changeBoxVis={() => setBoxVisible(false)} changeProcessState={() => setProcessStarted(false)} changeButtonVis={() => setButtonVisible(true)} changeShowCard={() => setShowCard(false)} changeStart={() => setStart(!start)}/>
+            <Dialog updateTargetCoordsLeft={(arr) => setTargetCoordsLeft(arr)} updateTargetCoordsRight={(arr) => setTargetCoordsRight(arr)} changeScrollable={() => changeScrollable(true)} changeShowCV={() => setShowCameraView(true)} changeBoxVis={() => setBoxVisible(false)} changeProcessState={() => setProcessStarted(false)} changeShowCard={() => setShowCard(false)} changeStart={() => setStart(!start)}/>
           </>
           )}
-          <div className={`cv ${showCameraView ? "visible" : "hidden"}`}><CameraView targetPositionsRight={targetCoordinatesRight} targetPositionsLeft={targetCoordinatesLeft} updateProcessRestart={() => setRestart(false)} processRestart={restart} changeStart={() => setStart(!start)} start={start} key={key}/></div>
+          <div className={`cv ${showCameraView ? "visible" : "hidden"}`}><CameraView targetPositionsRight={targetCoordinatesRight} targetPositionsLeft={targetCoordinatesLeft} updateProcessRestart={() => setRestart(false)} processRestart={restart} changeStart={() => setStart(!start)} start={start} /*key={key}*//></div>
           <div className="button-container"> 
           </div>
         </div>
