@@ -1,0 +1,87 @@
+body {
+  overflow: hidden; /* Verhindert das Scrollen der gesamten Seite */
+  height: 100vh; /* Stellt sicher, dass die Seite den gesamten Bildschirm ausfüllt */
+}
+
+.pages-column {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden; /* Kein Scrollen der Seite */
+  touch-action: none;
+}
+
+.page-1 {
+  position: absolute;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100vh; /* Füllt genau den Viewport */
+  opacity: 0;
+}
+
+.page-2 {
+  position: absolute;
+  pointer-events: none;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100vh; /* Füllt genau den Viewport */
+  opacity: 0;
+}
+
+/* Standardstatus für die erste Seite */
+.page-1.first-load {
+  left: 50%;
+  opacity: 1;
+  
+}
+
+/* Standardstatus für die zweite Seite */
+.page-2.first-load {
+  opacity: 0;
+}
+
+.page-1.active {
+  opacity: 1;
+  animation: slideInFromTop 0.8s forwards;
+}
+
+.page-1.disabled {
+  animation: slideOutToTop 0.8s forwards;
+}
+
+/* Standardstatus für die zweite Seite */
+.page-2.active {
+  pointer-events: auto;
+  opacity: 1;
+  animation: slideInFromBottom 0.8s forwards;
+}
+
+.page-2.disabled {
+  animation: slideOutToBottom 0.8s forwards;
+}
+
+/* Animationen */
+@keyframes slideInFromBottom {
+  0% { opacity: 0; transform: translateY(100%); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideOutToTop {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-100%); }
+}
+
+@keyframes slideInFromTop {
+  0% { opacity: 0; transform: translateY(-100%); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideOutToBottom {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(100%); }
+}
+
+@keyframes firstLoad {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}

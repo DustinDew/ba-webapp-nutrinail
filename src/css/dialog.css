@@ -1,0 +1,107 @@
+.card {
+  position: fixed;  /* Die Card bleibt an einer festen Position im Viewport */
+  top: 42%;          /* Vertikale Positionierung in der Mitte des Bildschirms */
+  left: 50%;         /* Horizontale Positionierung in der Mitte */
+  transform: translate(-50%, -50%); /* Um die Card exakt in der Mitte zu positionieren */
+  background-color: rgb(13, 25, 42); /* Hintergrundfarbe */
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(4, 7, 23, 0.448); /* Schattierung */
+  width: 400px; /* Feste Breite */
+  max-width: 90%; /* Optional: Passe an kleine Viewports an */
+  height: 600px; /* Feste Höhe */
+  z-index: 1000; /* Höherer z-Index, damit die Card vor anderen Elementen liegt */
+}
+
+.card h2 {
+  font-family: "Raleway", serif;
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #dfdfdf;
+  background-color: transparent;
+}
+
+.card p {
+  font-size: 16px;
+  display: block;
+  margin: 20px;
+  margin-top: 0px;
+  color: #dfdfdf;
+  background-color: transparent;
+}
+
+.card button {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  width: 28%;
+  height: 40px;
+  font-size: 18px;
+  background-color: #144e85;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  z-index: 101; /* Sicherstellen, dass der Button über anderen Elementen liegt */
+}
+
+.card button:active {
+  background-color: #0c3767;
+}
+
+.card button:hover {
+  background-color: #0c3767;
+}
+
+.backButton {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  width: 150px;
+  height: 50px;
+  font-size: 18px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  z-index: 101; /* Sicherstellen, dass der Button über anderen Elementen liegt */
+}
+.continueBttn {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  width: 150px;
+  height: 50px;
+  font-size: 18px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  z-index: 101; /* Sicherstellen, dass der Button über anderen Elementen liegt */
+}
+.continueBttn.disabled, .continueBttn.disabled:hover {
+  background-color: rgb(47, 51, 56);
+  color: rgb(147, 147, 147);
+}
+.kugel {
+  width: 8px;
+  height: 8px;
+  background-color: rgb(32, 60, 94);
+  border-radius: 50%;
+}
+
+.kugel.on {
+  background-color: rgb(216, 163, 30);
+  scale: 1.2;
+}
+.ball-row {
+  position: absolute;
+  bottom: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Abstand zwischen Repeat- und Continue-Button */
+  background-color: transparent;
+  text-align: center;
+
+}

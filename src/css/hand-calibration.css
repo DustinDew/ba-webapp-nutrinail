@@ -1,0 +1,59 @@
+.camera-view {
+  background-color: #cfe9ff00;
+  opacity: 0;
+  overflow: auto;
+}
+.camera-view.visible {
+  opacity: 1;
+}
+.camera-view.hidden {
+  opacity: 0;
+}
+
+.hand-cal-camera-container {
+  display: flex;
+  margin-top: 10px;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 8px;
+  background-color: #cfe9ff00;
+}
+
+.camera-video {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.camera-canvas {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 8px;
+  background-color: transparent;
+  
+}
+
+.landmark-coordinates {
+  position: "absolute"; 
+  top: 100;
+  left: 10; 
+  background-color: "rgba(0, 0, 0, 0.5)";
+  color: "white";
+  padding: "5px";
+  border-radius: "5px";
+  z-index: 100;
+}
+
+.coordinates {
+  background-color: transparent;
+}
