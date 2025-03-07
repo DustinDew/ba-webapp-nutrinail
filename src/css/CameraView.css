@@ -200,7 +200,7 @@
 }
 
 .progress-square.active {
-  animation: pulse 0.5s ease-in-out 1 forwards;
+  animation: pulseSquare 0.5s ease-in-out 1 forwards;
   animation-delay: 0.5s;
 }
 
@@ -221,7 +221,8 @@
 }
 
 .progress-square-1.active {
-  animation: pulse 0.5s ease-in-out 1 forwards;
+  animation: pulseSquare 0.5s ease-in-out 1 forwards;
+  
 }
 
 .progress-line {
@@ -268,7 +269,7 @@
   }
 }
 
-@keyframes pulse {
+@keyframes pulseSquare {
   0% {
     transform: scale(1);
     background-color: rgb(64, 73, 88);

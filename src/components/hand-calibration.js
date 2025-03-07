@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState, useEffect, useCallback } from "react";
 import { Hands } from "@mediapipe/hands";
 import "../css/hand-calibration.css";
-import useCameraCapture from "./useCameraCapture";
+import useCameraCapture from "./camera-capture";
 import useInitializeCamera from "./useInitializeCamera";
 
 const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updateHandSide, updateButtonStateRight, updateTargetCoordsLeft, updateTargetCoordsRight, processRestart, updateProcessRestart }) => {
@@ -171,7 +171,7 @@ const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updat
     });
   
     return hands;
-  }, [detectionConfidence, handLabel, handSide, targetPositions, landmarkCoordinates, stopCameraStream]);
+  }, [updateButtonStateLeft, updateButtonStateRight, updateCalSide, updateTargetCoordsLeft, updateTargetCoordsRight, detectionConfidence, handSide, targetPositions, landmarkCoordinates, stopCameraStream]);
   
 
   const startProcess = useCallback(async () => {
@@ -185,7 +185,7 @@ const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updat
     setTimeout(() => {
       setProcessStarted(true);
     }, 1000);
-  }, [videoRef, initializeCamera, initializeHands, restarted, setImageUrl]);
+  }, [initializeCamera, initializeHands, setImageUrl]);
 
   const firstStart = useCallback(async () => {
     startProcess();
@@ -224,6 +224,8 @@ const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updat
       updateProcessRestart();
     }
   }, [
+    processRestart,
+    updateProcessRestart,
     startCameraStream,
     maxCameraRes,
     maxCameraResRef,

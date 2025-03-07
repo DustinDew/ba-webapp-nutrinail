@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 
-const useCameraCapture = () => {
+const CameraCapture = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const videoRef = useRef(null);
@@ -66,4 +66,4 @@ const useCameraCapture = () => {
   };
 };
 
-export default useCameraCapture;
+export default CameraCapture;

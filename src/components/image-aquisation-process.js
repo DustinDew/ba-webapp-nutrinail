@@ -1,19 +1,19 @@
-import React, { useMemo, useRef, useState, useEffect, useCallback} from "react";
+import React, {useRef, useState, useEffect, useCallback} from "react";
 import { Hands } from "@mediapipe/hands";
 import "../css/CameraView.css";
-import useCameraCapture from "./useCameraCapture";
+import CameraCapture from "./camera-capture";
 import useInitializeCamera from "./useInitializeCamera";
 
-const CameraView = ({ targetPositionsLeft, targetPositionsRight, start, changeStart, processRestart, updateProcessRestart }) => {
+const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRight, start, changeStart, processRestart, updateProcessRestart }) => {
 
   const [videoSize, setVideoSize] = useState({ width: 400, height: 500 });
   const [handInPosition, setHandInPosition] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [processStarted, setProcessStarted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [handSide, setHandSide] = useState("Left");
+  const [handSide, setHandSide] = useState("Right");
   const [wrongHand, setWrongHand] = useState(false); 
-  const [handLabel, setHandLabel] = useState("rh");
+  const [handLabel, setHandLabel] = useState("lh");
   const [detectionConfidence, setDetectionConfidence] = useState(0.9);
   const [processStartCount, setProcessStartCount] = useState(0);
   const [savedImg, setSavedImg] = useState([]);
@@ -33,7 +33,7 @@ const CameraView = ({ targetPositionsLeft, targetPositionsRight, start, changeSt
     capturePhoto,
     stopCamera,
     setImageUrl,
-  } = useCameraCapture();
+  } = CameraCapture();
 
   const processVideoFrame = async (hands) => {
     const video = videoRef.current;
@@ -53,25 +53,25 @@ const CameraView = ({ targetPositionsLeft, targetPositionsRight, start, changeSt
     processVideoFrame
   );
 
-  const tolerance = 10;
+  const tolerance = 15;
   const boxSize = 60;
 
   const stopProcessAndCapture = useCallback(async () => {
-    if (handLabel === "rh") {
-      setHandLabel("rd");
-      setHandSide("Left");
-      setDetectionConfidence(0.5);
-    } else if (handLabel === "rd") {
-      setHandLabel("lh");
-      setHandSide("Right");
-      setDetectionConfidence(0.9);
-    } else if (handLabel === "lh") {
+    if (handLabel === "lh") {
       setHandLabel("ld");
       setHandSide("Right");
       setDetectionConfidence(0.5);
     } else if (handLabel === "ld") {
       setHandLabel("rh");
       setHandSide("Left");
+      setDetectionConfidence(0.9);
+    } else if (handLabel === "rh") {
+      setHandLabel("rd");
+      setHandSide("Left");
+      setDetectionConfidence(0.5);
+    } else if (handLabel === "rd") {
+      setHandLabel("lh");
+      setHandSide("Right");
       setDetectionConfidence(0.9);
     }
   
@@ -221,8 +221,9 @@ const CameraView = ({ targetPositionsLeft, targetPositionsRight, start, changeSt
     var hands = null;
     if (processStartCount >= 4) {
       setProcessStartCount(0);
-      alert("Danke für die Teilnahme!");
       setProcessFinished(true);
+      stopCamera();
+      updateFinished();
       return;
     } else {
       setProcessStartCount(processStartCount + 1);
@@ -235,7 +236,7 @@ const CameraView = ({ targetPositionsLeft, targetPositionsRight, start, changeSt
     setTimeout(() => {
       setProcessStarted(true);
     }, 1000);
-  }, [videoRef, savedImg, initializeCamera, initializeHands, processStartCount, restarted, setImageUrl]);
+  }, [updateFinished, stopCamera, initializeCamera, initializeHands, processStartCount, setImageUrl]);
 
   const firstStart = useCallback( async () => {
     startProcess();
@@ -446,4 +447,4 @@ const CameraView = ({ targetPositionsLeft, targetPositionsRight, start, changeSt
 
 };
 
-export default CameraView;
+export default ImageAquisation;

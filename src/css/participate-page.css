@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+* { 
+  background-color: #182a43;
+  box-sizing: border-box;
+  font-family: "Raleway", serif;
+}
+
+
+.resetButton {
+  position: relative;
+  bottom: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.1em;
+  width: 270px;
+  height: 40px;
+  color: #ffffff;
+  background-color: #16528b;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 4px 5px 0 rgba(44, 49, 70, 0.214), 0 4px 8px 0 rgba(0,0,0,0.19);
+}
+
+
+.resetButton:hover {
+  background-color: #3f6eb5;
+}
+.resetButton:active {
+  background-color: #3f6eb5;
+}
+.resetButton.fade-in {
+  opacity: 1;
+}
+.resetButton.fade-out {
+  opacity: 0;
+}
+.startButton {
+  font-family: "Raleway", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 450;
+  font-size: 1.1em;
+  display: block;
+  margin: auto;
+  width: 200px;
+  height: 50px;
+  color: #ffffff;
+  background-color: #E0B539;
+  border-radius: 5px;
+  margin-top: 40px; 
+  box-shadow: 0 4px 5px 0 rgba(17, 28, 52, 0.381), 0 4px 10px 0 rgba(0,0,0,0.19);
+  border: none;
+}
+.startButton:hover {
+  background-color: #c3913b;
+}
+.startButton:active {
+  background-color: #c3913b;
+};
+
+.startButton.active {
+  background-color: #E0B539; /* Beispiel-Farbe */
+}
+
+.startButton:disabled {
+  background-color: #62615d;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+
+.startButton p {
+  font-size: 5em;
+  background-color: #E0B539;
+}
+
+.participateText {
+  height: 100vw;
+  font-family: "Raleway", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 350;
+  
+  hyphens: auto; 
+	text-align: center;
+  line-height: 1.5;
+  font-size: medium;
+  margin: 0px;
+  margin-top: 2%;
+  background-color: #ffffff00;
+}
+
+.participateText h1 {
+  font-family: "Raleway", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 250;
+  font-size: 3em;
+  text-align: center;
+  color: #cfe9ff;
+  background-color: #ffffff00;
+}
+
+.participateText h3 {
+  font-family: "Raleway", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 350;
+  text-align: center;
+  color: #cfe9ff;
+  background-color: #ffffff00;
+}
+.participateText p {
+  color: #ffffff00;
+}
+
+.infoCard {
+  text-align: center;
+  
+  margin: auto;
+  margin-bottom: 20px;
+  margin-top: 50px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 250px;
+  height: 100px;
+  background-color: #041c31;
+ 
+}
+.infoCard p {
+  margin-left: 5px;
+  color: #dcdcdc;
+  background-color: #ffffff00;
+}
+
+.participateCard {
+  text-align: center;
+  display: block;
+  margin: auto;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  width: 250px;
+  height: 210px;
+  background-color: rgb(13, 25, 42);
+}
+.participateCard p {
+   color: #dcdcdc;
+   background-color: #ffffff00;
+}
+
+.camera-view {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0%;
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.cv.hidden {
+  opacity: 0;
+}
+.cv.visible {
+  opacity: 1;
+}
+
+.dialog {
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.box.fade-in .dialog{
+  background-color: #ffffff00;
+  opacity: 1;
+}
+.box.fade-out .dialog {
+  opacity: 0;
+  scale: 0.95;
+}
+.box.fade-out .camera-view {
+  opacity: 0;
+}
+.box.box.fade-in .camera-view {
+  height: 100vh;  /* Volle Bildschirmhöhe */  
+}
+.flippable-card {
+  width: 250px;
+  height: 150px;
+  perspective: 1000px;
+  margin: 20px auto;
+  transition: transform 0.6s ease-in-out;
+  
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease-in-out;
+}
+
+.flippable-card.flipped .card-inner {
+  transform: rotateY(180deg); 
+}
+
+.card-front,
+.card-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+ 
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.card-front {
+  background-color: rgb(13, 25, 42);
+  color: #dcdcdc;
+}
+.card-front p {
+  background-color: #ffffff00;
+  color: #dcdcdc;
+}
+.card-back {
+  background-color: rgb(9, 19, 31);
+  color: #dcdcdc;
+  transform: rotateY(180deg);
+}
+
+.card-back p {
+  background-color: #ffffff00;
+  color: #dcdcdc;
+}
+.backText {
+  background-color: #ffffff00;
+}
+
+.darkBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #041731;
+  z-index: -1;
+}
+
+.main-container.dark {
+  background-color: #10121664;
+}
+.main-container.bright {
+  background-color: #182a43;
+}
+
+.button-container {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100vw;
+  background-color: transparent;
+}
+
+.finished-container {
+  background-color: transparent;
+  padding: 30px;
+}
+
+.finished-container, .thx {
+  background-color: transparent;
+  font-family: "Raleway", serif;
+  font-weight: 350;
+  font-size: 1.5em;
+  text-align: center;
+  color: #cfe9ff;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.finished-container, .p {
+  font-size: 1em;
+  color: #cfe9ff;
+  background-color: transparent;
+}
+
+.exit-button {
+  margin-top: 50px;
+  text-align: center;
+  width: 130px;
+  height: 35px;
+  font-size: 18px;
+  background-color: #144e85;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.114);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  z-index: 101; /* Sicherstellen, dass der Button über anderen Elementen liegt */
+}
+.survey-button {
+  margin-top: 50px;
+  margin-left: 25px;
+  text-align: center;
+  width: 150px;
+  height: 40px;
+  font-size: 18px;
+  background-color: #E0B539;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.114);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  z-index: 101; /* Sicherstellen, dass der Button über anderen Elementen liegt */
+  animation: button-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes button-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

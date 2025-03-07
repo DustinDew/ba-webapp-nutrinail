@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import "../css/dialog.css"
 import HandCalibration from "./hand-calibration";
 
-const Dialog = ({updateTargetCoordsLeft, updateTargetCoordsRight, changeScrollable, changeShowCV, changeStart, changeShowCard, changeButtonVis, changeProcessState,  changeBoxVis}) => {
+const Dialog = ({changeShowScrollIndc, updateTargetCoordsLeft, updateTargetCoordsRight, changeScrollable, changeShowCV, changeStart, changeShowCard, changeProcessState,  changeBoxVis}) => {
   const [cardIndex, setCardIndex] = useState(0);
   const [buttonStateRight, setButtonStateRight] = useState(true);
   const [buttonStateLeft, setButtonStateLeft] = useState(true);
   const [handSide, setHandSide] = useState("Left");
   const [calSide, setCalSide] = useState("Right");
+
   const changeCardIndex = () => {
     if (cardIndex < 2) {
       setCardIndex(cardIndex + 1)
@@ -34,6 +35,7 @@ const Dialog = ({updateTargetCoordsLeft, updateTargetCoordsRight, changeScrollab
     changeShowCard();
     changeScrollable();
     setButtonStateRight(true);
+    changeShowScrollIndc();
   };
   useEffect(()=> {
     
@@ -65,7 +67,7 @@ const Dialog = ({updateTargetCoordsLeft, updateTargetCoordsRight, changeScrollab
             <p>Sobald alle Finger in Position sind, wird automatisch ein Bild aufgenommen, die Hand muss solange still gehalten werden.</p>
       
             <button className="backButton" onClick={backButton}>Zurück</button>
-            <button onClick={() => {changeShowCard(); changeButtonVis();changeShowCV()}}>Starten</button>
+            <button onClick={() => {changeShowCard();changeShowCV()}}>Starten</button>
           </>
         )}
         <div className="ball-row">

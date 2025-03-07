@@ -6,7 +6,11 @@
   font-family: "Raleway", serif;
 }
 
-
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
 .resetButton {
   position: relative;
   bottom: 220px;
@@ -68,8 +72,6 @@
   font-optical-sizing: auto;
   font-style: normal;
   font-weight: 200;
-  margin-top: 0px;
-  margin-bottom: 20px;
   text-align: center;
   color: #ebebeb;
   font-size: 3.5em;
@@ -83,14 +85,21 @@
   font-optical-sizing: auto;
   font-style: normal;
   font-weight: 350;
-  
   hyphens: auto; 
 	text-align: center;
   line-height: 1.5;
   font-size: medium;
-  margin: 50px;
-  margin-top: 2%;
+  margin: 0px;
+  
+  
   background-color: #ffffff00;
+}
+.welcomeText img {
+  
+  position: absolute;
+  top: 60px;
+  width: 150px;
+  background-color: transparent;
 }
 .welcomeText h3 {
   font-family: "Raleway", serif;
@@ -101,15 +110,36 @@
   color: #cfe9ff;
   background-color: #ffffff00;
 }
-.welcomeText p {
-  color: #ffffff00;
+.welcomeText h2 {
+  font-family: "Raleway", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 250;
+  font-size: 0.9em;
+  text-align: center;
+  color: #cfe9ff;
+  background-color: #ffffff00;
+  margin-top: -30px;
+  margin-bottom: 50px;
 }
+
+.welcomeText h1 {
+  font-family: "Raleway", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 250;
+  font-size: 4em;
+  text-align: center;
+  color: #cfe9ff;
+  background-color: #ffffff00;
+  margin-top: 10px;
+  margin-bottom: 100px;
+}
+
 .infoCard {
   text-align: center;
-  
-  margin: auto;
   margin-bottom: 20px;
-  margin-top: 50px;
+  margin-top: 80px;
   padding: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
@@ -119,25 +149,9 @@
  
 }
 .infoCard p {
-  margin-left: 5px;
+  margin-left: 50px;
   color: #dcdcdc;
   background-color: #ffffff00;
-}
-
-.participateCard {
-  text-align: center;
-  display: block;
-  margin: auto;
-  padding: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  width: 250px;
-  height: 210px;
-  background-color: rgb(13, 25, 42);
-}
-.participateCard p {
-   color: #dcdcdc;
-   background-color: #ffffff00;
 }
 
 .camera-view {
@@ -245,7 +259,7 @@
   background-color: #10121664;
 }
 .main-container.bright {
-  background-color: #182a43;
+  background-color: #5a7aa7;
 }
 
 .button-container {
@@ -254,4 +268,45 @@
   transform: translateX(-50%);
   height: 100vw;
   background-color: transparent;
+}
+.main-container {
+  margin: 0;
+}
+.arrow.active {
+  position: fixed;
+  bottom: 15%;
+  left: 42%;
+  transform: translateX(-42%);
+  background-color: transparent;
+  animation: pulse 2.5s ease-in infinite;
+}
+
+.arrow.off {
+  opacity: 0;
+  position: fixed;
+  bottom: 15%;
+  left: 42%; /* Diese Position bleibt gleich */
+  background-color: transparent;
+  animation: fadeOut 1s forwards; /* Nur die Ausblend-Animation */
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

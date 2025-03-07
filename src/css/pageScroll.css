@@ -60,6 +60,29 @@ body {
   animation: slideOutToBottom 0.8s forwards;
 }
 
+.scroll-indicator {
+  position: fixed;
+  left: 20px; /* Abstand vom linken Rand */
+  top: 50%;
+  transform: translateY(-50%); /* Vertikale Zentrierung */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: transparent;
+}
+
+.scroll-indicator .dot {
+  width: 10px; /* Größe der Kugeln */
+  height: 10px;
+  margin: 8px 0;
+  border-radius: 50%; /* Runde Form */
+  background-color: rgb(36, 67, 106); /* Standardfarbe der Kugeln */
+  transition: background-color 0.3s ease;
+}
+
+.scroll-indicator .dot.active {
+  background-color: #E0B539; /* Farbe der aktiven Kugel */
+}
 /* Animationen */
 @keyframes slideInFromBottom {
   0% { opacity: 0; transform: translateY(100%); }

@@ -1,10 +1,10 @@
 import "./css/global.css"
-import PageScroll from "./components/pageScroll.js";
+import ScrollPage from "./components/scroll-page.js";
 
 const App = () => {
   return (
     <div>
-      <PageScroll/>
+      <ScrollPage/>
     </div>
   );
 };
