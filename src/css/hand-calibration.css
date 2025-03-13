@@ -82,6 +82,7 @@
 /* HTML: <div class="loader"></div> */
 .loader {
   position: absolute;
+  top: 40vw;
   width: 90px;
   aspect-ratio: 1;
   border: 15px solid #303030;
@@ -96,7 +97,7 @@
   inset: -15px;
   border-radius: 50%;
   border: 15px solid #fab427;
-  animation: l18 1.5s infinite linear;
+  animation: l18 1.3s infinite linear;
 }
 @keyframes l18 {
     0%   {clip-path:polygon(50% 50%,0 0,0    0,0    0   ,0    0   ,0    0   )}
@@ -107,24 +108,85 @@
 }
 
 .loader-text {
+  position: absolute;
+  top: 30vw;
   background-color: transparent;
   color: #ffffff;
   font-size: 1.5em;
 }
 
 .calDone-text1 {
- position: absolute;
- top: 35%;
+ 
   background-color: transparent;
   color: #e3e3e3;
   font-size: 1.3em;
   
 }
 .calDone-text2 {
-  position: absolute;
-  top: 60%;
+  text-align: center;
   background-color: transparent;
   color: #e3e3e3;
   font-size: 1.3em;
   
+}
+
+.fingertip-target {
+  position: absolute;
+  pointer-events: none; /* Verhindert Interaktionen mit den Zielbildern */
+  transform: translate(-50%, -50%); /* Zentriert das SVG auf den Zielpunkten */
+  opacity: 0.7; /* Optional: Transparenz für das SVG */
+  z-index: 1000;
+  background-color: transparent;
+}
+.checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: #7ac142;
+  fill: none;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+  margin: 10% auto;
+  box-shadow: inset 0px 0px 0px #7ac142;
+  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+
+.checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes scale {
+  0%, 100% {
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 50px #7ac142;
+  }
+}
+.loading-screen-cal {
+  background-color: transparent;
+  margin-top: 50px;
 }

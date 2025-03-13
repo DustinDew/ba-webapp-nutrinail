@@ -3,6 +3,7 @@ import { Hands } from "@mediapipe/hands";
 import "../css/CameraView.css";
 import CameraCapture from "./camera-capture";
 import useInitializeCamera from "./useInitializeCamera";
+import { ReactComponent as FingerTipGrey } from "../assets/fingertip-grey.svg";
 
 const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRight, start, changeStart, processRestart, updateProcessRestart }) => {
 
@@ -56,7 +57,7 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
     processVideoFrame
   );
 
-  const tolerance = 15;
+  const tolerance = 20;
   const boxSize = 60;
 
   const stopProcessAndCapture = useCallback(async () => {
@@ -113,7 +114,7 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
   
     hands.setOptions({
       maxNumHands: 1,
-      modelComplexity: 0,
+      modelComplexity: 1,
       minDetectionConfidence: detectionConfidence,
       minTrackingConfidence: 0.5,
     });
@@ -165,18 +166,11 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
   
         inPosition = Math.abs(x - targetX) <= tolerance && Math.abs(y - targetY) <= tolerance;
   
-        if (!inPosition) {
-          ctx.beginPath();
-          ctx.arc(x, y, 5, 0, 2 * Math.PI);
-          ctx.fillStyle = "red";
-          ctx.fill();
-        }
-  
         ctx.beginPath();
-        ctx.rect(targetX - boxSize / 2, targetY - boxSize / 2, boxSize, boxSize);
-        ctx.strokeStyle = inPosition ? "green" : "red";
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        ctx.arc(x, y, 5, 0, 2 * Math.PI);
+        ctx.fillStyle = inPosition ? "green" : "red"; // Wenn im Zielbereich, grün, sonst rot
+        ctx.fill();
+
       } else {
         let allFingersInPosition = true;
         targetPositions.forEach((target, index) => {
@@ -189,20 +183,17 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
           const targetY = target.y * canvas.height;
   
           const fingerInPosition = Math.abs(x - targetX) <= tolerance && Math.abs(y - targetY) <= tolerance;
-  
+
+          ctx.beginPath();
+          ctx.arc(x, y, 5, 0, 2 * Math.PI);
+          ctx.fillStyle = fingerInPosition ? "green" : "red"; // Wenn im Zielbereich, grün, sonst rot
+          ctx.fill();
+
           if (!fingerInPosition) {
             allFingersInPosition = false;
-            ctx.beginPath();
-            ctx.arc(x, y, 5, 0, 2 * Math.PI);
-            ctx.fillStyle = "red";
-            ctx.fill();
           }
   
-          ctx.beginPath();
-          ctx.rect(targetX - boxSize / 2, targetY - boxSize / 2, boxSize, boxSize);
-          ctx.strokeStyle = fingerInPosition ? "green" : "red";
-          ctx.lineWidth = 2;
-          ctx.stroke();
+         
         });
   
         inPosition = allFingersInPosition;
@@ -261,6 +252,8 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
     const imgArray = savedImg;
     imgArray.pop();
     setSavedImg(imgArray);
+    const count = processStartCount - 1;
+    setProcessStartCount(count);
     setRestarted(true);
   };
 
@@ -371,7 +364,74 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
             <>
               <video ref={videoRef} className="camera-video" autoPlay playsInline muted />
               <canvas ref={canvasRef} className="camera-canvas" />
+
+              {/* Fingerspitzen-SVG als Zielbereiche anzeigen */}
+
+              {handLabel === "rd" && (<>
+                <FingerTipGrey
+                  className="fingertip-target"
+                  style={{
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    width: "200px",
+                    height: "200px",
+                    opacity: 0.5,
+                    pointerEvents: "none", // Verhindert Interaktionen mit dem Bild
+                  }}
+                />
+              </>)}
+              {handLabel === "ld" && (<>
+                <FingerTipGrey
+                  className="fingertip-target"
+                  style={{
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    width: "200px",
+                    height: "200px",
+                    opacity: 0.5,
+                    pointerEvents: "none", // Verhindert Interaktionen mit dem Bild
+                  }}
+                />
+              </>)}
+
+              {handSide === "Right" && handLabel != "ld"  &&(<>
+                {targetPositionsLeft.map((target, index) => (
+                  <FingerTipGrey
+                  className="fingertip-target"
+                  style={{
+                    position: "absolute",
+                    left: `${target.x * videoSize.width}px`,
+                    top: `${target.y * videoSize.height + 25}px`,
+                    width: "200px",
+                    height: "200px",
+                    opacity: 0.5,
+                    pointerEvents: "none", // Verhindert Interaktionen mit dem Bild
+                  }}
+                />
+                
+                ))}
+              </>)}
+              {handSide === "Left" && handLabel != "rd" &&(<>
+                {targetPositionsRight.map((target, index) => (
+                  <FingerTipGrey
+                  className="fingertip-target"
+                  style={{
+                    position: "absolute",
+                    left: `${target.x * videoSize.width}px`,
+                    top: `${target.y * videoSize.height + 25}px`,
+                    width: "200px",
+                    height: "200px",
+                    opacity: 0.5,
+                    pointerEvents: "none", // Verhindert Interaktionen mit dem Bild
+                  }}
+                />
+                
+                ))}
+              </>)}
               
+
               {/* Feedback Overlay */}
               
               {processStarted && showOverlay && (

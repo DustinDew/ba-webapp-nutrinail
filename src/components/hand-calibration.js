@@ -3,8 +3,11 @@ import { Hands } from "@mediapipe/hands";
 import "../css/hand-calibration.css";
 import useCameraCapture from "./camera-capture";
 import useInitializeCamera from "./useInitializeCamera";
+import { ReactComponent as FingerTipGrey } from "../assets/fingertip-grey.svg";
 
-const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updateHandSide, updateButtonStateRight, updateTargetCoordsLeft, updateTargetCoordsRight, processRestart, updateProcessRestart }) => {
+
+
+const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSide, handSide, updateHandSide, updateButtonStateRight, updateTargetCoordsLeft, updateTargetCoordsRight, processRestart, updateProcessRestart }) => {
   const [start, setStart] = useState(true);
   const [videoSize, setVideoSize] = useState({ width: 400, height: 500 });
   const [handInPosition, setHandInPosition] = useState(false);
@@ -76,7 +79,7 @@ const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updat
 
     hands.setOptions({
       maxNumHands: 1,
-      modelComplexity: 0,
+      modelComplexity: 1,
       minDetectionConfidence: detectionConfidence,
       minTrackingConfidence: 0.5,
     });
@@ -85,7 +88,7 @@ const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updat
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
       const video = videoRef.current;
-
+    
       if (!video || !results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
         setHandInPosition(false);
         setWrongHand(false);
@@ -93,7 +96,7 @@ const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updat
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         return;
       }
-
+    
       if (results.multiHandedness && results.multiHandedness[0].label !== handSide) {
         setWrongHand(true);
         setHandInPosition(false);
@@ -103,46 +106,42 @@ const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updat
         setWrongHand(false);
         setOverlayVisible(false); // Maske ausblenden, wenn die richtige Hand erkannt wurde
       }
-
+    
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
-
+    
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    
       const landmarks = results.multiHandLandmarks[0];
       let allFingersInPosition = true;
-
+    
       const newLandmarkCoordinates = [];
-
+    
       targetPositions.forEach((target, index) => {
         const fingerLandmarkIndex = [8, 12, 16, 20][index];
         const point = landmarks[fingerLandmarkIndex];
         const x = point.x * canvas.width;
         const y = point.y * canvas.height;
-
+    
         const normalizedX = x / canvas.width;
         const normalizedY = y / canvas.height;
-
+    
         const fingerInPosition =
-          Math.abs(x - target.x * canvas.width) <= tolerance && Math.abs(y - target.y * canvas.height) <= tolerance;
-
+          Math.abs(x - target.x * canvas.width) <= tolerance && Math.abs(y - target.y * canvas.height) <= tolerance + 40;
+    
+        // Zeichne den Punkt und ändere die Farbe, je nachdem, ob der Finger im Zielbereich ist oder nicht
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, 2 * Math.PI);
+        ctx.fillStyle = fingerInPosition ? "green" : "red"; // Wenn im Zielbereich, grün, sonst rot
+        ctx.fill();
+    
         if (!fingerInPosition) {
           allFingersInPosition = false;
-          ctx.beginPath();
-          ctx.arc(x, y, 5, 0, 2 * Math.PI);
-          ctx.fillStyle = "red";
-          ctx.fill();
         }
-
-        ctx.beginPath();
-        ctx.rect(target.x * canvas.width - targetAreaSize / 2, target.y * canvas.height - targetAreaSize / 2, targetAreaSize, targetAreaSize);
-        ctx.strokeStyle = fingerInPosition ? "green" : "red";
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
+    
         newLandmarkCoordinates.push({ x: normalizedX, y: normalizedY });
       });
-
+    
       if (allFingersInPosition && landmarkCoordinates.length === 0) {
         setLandmarkCoordinates(newLandmarkCoordinates);
         if (handSide === "Right") {
@@ -153,22 +152,20 @@ const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updat
           stopCameraStream();
           updateCalSide();
           
-        };
-        if(handSide === "Left") {
+        }
+        if (handSide === "Left") {
           updateTargetCoordsRight(newLandmarkCoordinates);
           updateButtonStateRight();
           setIsActive(false);
           setTimeout(() => {
             stopCameraStream();
             updateCalSide();
-          }, 1500)
-        };
-
-        
+          }, 1300);
+        }
       }
-
+    
       setHandInPosition(allFingersInPosition);
-
+    
       if (allFingersInPosition) {
         targetPositions.forEach((target) => {
           const targetX = target.x * canvas.width;
@@ -181,6 +178,7 @@ const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updat
         });
       }
     });
+    
 
     return hands;
   }, [updateButtonStateLeft, updateButtonStateRight, updateCalSide, updateTargetCoordsLeft, updateTargetCoordsRight, detectionConfidence, handSide, targetPositions, landmarkCoordinates, stopCameraStream]);
@@ -209,7 +207,7 @@ const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updat
       const timer = setTimeout(() => {
         setShowLoader(false);
         setCalDone(true)
-      }, 1500);
+      }, 1300);
       
       return () => clearTimeout(timer); // Cleanup, falls sich der State ändert
     }
@@ -268,10 +266,28 @@ const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updat
           height: videoSize.height,
         }}
       >
-        {isActive && (
+        {isActive && !calDone && (
           <>
             <video ref={videoRef} className="camera-video" autoPlay playsInline muted />
             <canvas ref={canvasRef} className="camera-canvas" />
+            
+            {/* Fingerspitzen-SVG als Zielbereiche anzeigen */}
+            {targetPositions.map((target, index) => (
+              <FingerTipGrey
+              className="fingertip-target"
+              style={{
+                position: "absolute",
+                left: `${target.x * videoSize.width}px`,
+                top: `${target.y * videoSize.height + 25}px`,
+                width: "200px",
+                height: "200px",
+                fill: "red", // Hier kannst du die Farbe setzen
+                opacity: 0.5,
+                pointerEvents: "none", // Verhindert Interaktionen mit dem Bild
+              }}
+            />
+            
+            ))}
           </>
         )}
         {overlayVisible && wrongHand && (
@@ -281,16 +297,27 @@ const HandCalibration = ({ updateButtonStateLeft, updateCalSide, handSide, updat
         )}
         <video className="hidden" ref={videoRef2} style={{ display: "none" }} autoPlay muted></video>
         <canvas className="hidden" ref={canvasRef2} style={{ display: "none" }}></canvas>
-       
+
         {!isActive && handSide === "Left" && (<> 
-        <div className="loader-text">Bitte warten..</div>
-        <div class="loader"></div>
+          <div className="loader-text">Bitte warten..</div>
+          <div className="loader"></div>
         </>)}
         {!isActive && handSide === "Right" && showLoader && (<> 
           <div className="loader-text">Bitte warten..</div>
-          <div class="loader"></div>
+          <div className="loader"></div>
         </>)}
-        {calDone && (<><div className="calDone-text1">Kalibrierung erfolgreich!</div><div className="calDone-text2">Klicke auf Weiter</div></>)}
+        {calDone && (<>
+          <div className="loading-screen-cal"> 
+            <div className="calDone-text1">Kalibrierung erfolgreich!</div>
+            <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+              <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+              <path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+            <div className="calDone-text2">Klicke auf Weiter</div>
+          </div>
+          
+          
+        </>)}
       </div>
     </div>
   );

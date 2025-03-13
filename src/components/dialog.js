@@ -8,6 +8,7 @@ const Dialog = ({changeShowScrollIndc, updateTargetCoordsLeft, updateTargetCoord
   const [buttonStateLeft, setButtonStateLeft] = useState(true);
   const [handSide, setHandSide] = useState("Left");
   const [calSide, setCalSide] = useState("Right");
+  const [calibrationFinished, setCalibrationFinished] = useState(false);
 
   const changeCardIndex = () => {
     if (cardIndex < 2) {
@@ -46,20 +47,38 @@ const Dialog = ({changeShowScrollIndc, updateTargetCoordsLeft, updateTargetCoord
       <div className="card">
         {cardIndex === 0 && (
           <>
-          {calSide === "Right" && (
+          {!calibrationFinished ? (
+            <>
+            {calSide === "Right" && (
             <>
               <h2>Kalibrierung Rechts</h2>
               <HandCalibration updateCalSide={() => setCalSide("Left")} handSide={"Left"} updateHandSide={(side) => setHandSide(side)} updateButtonStateRight={()=>setButtonStateRight(false)} updateTargetCoordsLeft={(arr) => updateTargetCoordsLeft(arr)} updateTargetCoordsRight={(arr) => updateTargetCoordsRight(arr)}/>
             </>
-          )}
-          {calSide === "Left" && (
+            )}
+            {calSide === "Left" && (
+              <>
+                <h2>Kalibrierung Links</h2>
+                <HandCalibration updateCalFinished={() => setCalibrationFinished(!calibrationFinished)} handSide={"Right"} updateHandSide={(side) => setHandSide(side)} updateButtonStateLeft={()=>setButtonStateLeft(false)} updateTargetCoordsLeft={(arr) => updateTargetCoordsLeft(arr)} updateTargetCoordsRight={(arr) => updateTargetCoordsRight(arr)}/>
+              </>
+            )}
+            </>
+          ): (
             <>
-              <h2>Kalibrierung Links</h2>
-              <HandCalibration handSide={"Right"} updateHandSide={(side) => setHandSide(side)} updateButtonStateLeft={()=>setButtonStateLeft(false)} updateTargetCoordsLeft={(arr) => updateTargetCoordsLeft(arr)} updateTargetCoordsRight={(arr) => updateTargetCoordsRight(arr)}/>
+            <h2>Kalibrierung</h2>
+            <div className="loading-screen-cal-na"> 
+            <div className="calDone-text1-na">Kalibrierung erfolgreich!</div>
+            <svg className="checkmark-na" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+              <circle className="checkmark__circle-na" cx="26" cy="26" r="25" fill="none"/>
+              <path className="checkmark__check-na" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+            <div className="calDone-text2">Klicke auf Weiter</div>
+          </div>
             </>
           )}
+
+          
               <button className="backButton" onClick={backButton}>Zurück</button>
-              <button className={`continueBttn ${!buttonStateLeft ? "active" : "disabled"}`} disabled={buttonStateLeft} onClick={ () => {changeCardIndex();}}>Weiter</button>
+              <button className={`continueBttn ${!buttonStateLeft ? "active" : "disabled"}`} disabled={buttonStateLeft} onClick={ () => {changeCardIndex(); setCalibrationFinished(true)}}>Weiter</button>
           </>
         )}
         {cardIndex === 1 && (

@@ -100,8 +100,8 @@
   text-align: center;
 }
 .feedback2 {
-  position: fixed;
-  margin-top: 20px;
+  position: inherit;
+  top: 0vw;
   
   z-index: 10;
   color: white;
