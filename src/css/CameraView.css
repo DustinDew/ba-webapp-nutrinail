@@ -87,23 +87,41 @@
   background-color: #c3913b;
 }
 
-.feedback {
-  background-color: #ffffff00;
+.feedback1 {
+  position: fixed;
+  z-index: 100;
+  color: white;
+  font-size: 1.5em; /* Kleinere Schriftgröße */
+  font-weight: bold;
+  padding: 10px;
+  background-color: transparent;
+  border-radius: 5px;
+  max-width: 90%;
+  text-align: center;
+}
+.feedback2 {
   position: fixed;
   margin-top: 20px;
   
   z-index: 10;
   color: white;
-  font-size: 12px; /* Kleinere Schriftgröße */
+  font-size: 1.5em; /* Kleinere Schriftgröße */
   font-weight: bold;
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0);
   border-radius: 5px;
   max-width: 90%;
   text-align: center;
 }
-.feedback p {
+.feedback1 p {
   background-color: #ffffff00;
+  font-size: 1.5em;
+  color: rgb(237, 71, 0);
+  z-index: 100;
+}
+.feedback2 p {
+  background-color: #ffffff00;
+  font-size: 1.5em;
 }
 .captured-image-container {
   position: absolute;
@@ -293,6 +311,34 @@
   }
 }
 
+.feedback-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); /* Halbtransparentes Schwarz */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10; /* Stellt sicher, dass es über dem Canvas liegt */
+}
+
+.feedback-overlay1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Halbtransparentes Schwarz */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100; /* Stellt sicher, dass es über dem Canvas liegt */
+
+}
+
+
 /* Responsive Anpassungen */
 @media (max-width: 500px) {
   .camera-video, .camera-canvas {
@@ -389,4 +435,10 @@
   100% {
     box-shadow: inset 0px 0px 0px 50px #7ac142;
   }
+}
+
+.loading-text {
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 1.5em;
 }

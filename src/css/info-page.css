@@ -275,19 +275,38 @@ body, html {
 .arrow.active {
   position: fixed;
   bottom: 15%;
-  left: 42%;
-  transform: translateX(-42%);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px; /* An SVG-Größe angepasst */
+  height: 60px;
   background-color: transparent;
-  animation: pulse 2.5s ease-in infinite;
+
 }
 
 .arrow.off {
-  opacity: 0;
   position: fixed;
   bottom: 15%;
-  left: 42%; /* Diese Position bleibt gleich */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px; /* An SVG-Größe angepasst */
+  height: 60px;
   background-color: transparent;
   animation: fadeOut 1s forwards; /* Nur die Ausblend-Animation */
+}
+
+.arrow svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  background-color: transparent;
+  animation: pulse 2.5s ease-in infinite;
+  transform-origin: center;
 }
 
 @keyframes pulse {
@@ -296,6 +315,7 @@ body, html {
   }
   50% {
     transform: scale(1.2);
+    transform-origin: center;
   }
   100% {
     transform: scale(1);

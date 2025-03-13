@@ -14,12 +14,13 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
   const [handSide, setHandSide] = useState("Right");
   const [wrongHand, setWrongHand] = useState(false); 
   const [handLabel, setHandLabel] = useState("lh");
-  const [detectionConfidence, setDetectionConfidence] = useState(0.9);
+  const [detectionConfidence, setDetectionConfidence] = useState(0.5);
   const [processStartCount, setProcessStartCount] = useState(0);
   const [savedImg, setSavedImg] = useState([]);
   const [restarted, setRestarted] = useState(false);
   const [processFinished, setProcessFinished] = useState(false);
   const [maxCameraRes, setMaxCameraRes] = useState({ width: 1280, height: 720 });
+  const [showOverlay, setShowOverlay] = useState(true);
   const maxCameraResRef = useRef(maxCameraRes); 
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -35,6 +36,8 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
     setImageUrl,
   } = CameraCapture();
 
+
+ 
   const processVideoFrame = async (hands) => {
     const video = videoRef.current;
     if (video && video.readyState >= 2) {
@@ -64,17 +67,14 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
     } else if (handLabel === "ld") {
       setHandLabel("rh");
       setHandSide("Left");
-      setDetectionConfidence(0.9);
     } else if (handLabel === "rh") {
       setHandLabel("rd");
       setHandSide("Left");
-      setDetectionConfidence(0.5);
     } else if (handLabel === "rd") {
       setHandLabel("lh");
       setHandSide("Right");
-      setDetectionConfidence(0.9);
     }
-  
+    setShowOverlay(true);
     setIsActive(false);
     setProcessStarted(false);
     stopCameraStream();
@@ -108,12 +108,12 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
 
   const initializeHands = useCallback(() => {
     const hands = new Hands({
-      locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`,
+      locateFile: (file) => `/mediapipe/hands/${file}`,
     });
   
     hands.setOptions({
       maxNumHands: 1,
-      modelComplexity: 1,
+      modelComplexity: 0,
       minDetectionConfidence: detectionConfidence,
       minTrackingConfidence: 0.5,
     });
@@ -126,6 +126,7 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
       if (!video || !results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
         setHandInPosition(false);
         setWrongHand(false);
+        setShowOverlay(true);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         return;
       }
@@ -137,6 +138,7 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
         return;
       } else {
         setWrongHand(false);
+        setShowOverlay(false);
       }
   
       canvas.width = video.videoWidth;
@@ -336,7 +338,6 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
 
   return (
     <div className="camera-view">
-      {/* Wrapper für Card-Hintergrund */}
       <div className="camera-card">
         <div className="progress-bar">
           <div className={`progress-square-1 ${savedImg.length >= 1 ? "active" : "off"}`}>
@@ -358,7 +359,7 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
             {savedImg.length === 4 ? (<>&#10003;</>) : (<>&#10008;</>)}
           </div>
         </div>
-        {/* Kamera-Container */}
+  
         <div
           className="camera-container"
           style={{
@@ -370,80 +371,72 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
             <>
               <video ref={videoRef} className="camera-video" autoPlay playsInline muted />
               <canvas ref={canvasRef} className="camera-canvas" />
-
               
-
-              {/* Feedback-Element */}
-              {processStarted && (
-                <div className="feedback">
-                  {handLabel === "rd" && <p>Rechter Daumen</p>}
-                  {handLabel === "ld" && <p>Linker Daumen</p>}
-                  {handLabel === "rh" && <p>Rechte Hand</p>}
-                  {handLabel === "lh" && <p>Linke Hand</p>}
-                  {wrongHand ? (
-                    <p style={{ color: "red", fontSize: "14px" }}>Bitte Hand wechseln</p>
-                  ) : handInPosition ? (
-                    <p style={{ color: "green" }}>Alle Finger in der richtigen Position!</p>
-                  ) : null}
+              {/* Feedback Overlay */}
+              
+              {processStarted && showOverlay && (
+                <div className="feedback-overlay">
+                  <div className="feedback2">
+                    {handLabel === "rd" && <p>Rechter Daumen</p>}
+                    {handLabel === "ld" && <p>Linker Daumen</p>}
+                    {handLabel === "rh" && <p>Rechte Hand</p>}
+                    {handLabel === "lh" && <p>Linke Hand</p>}
+                  </div>
                 </div>
               )}
-              
             </>
           )}
+          
+          {/* Loading Screen */}
           {isLoading && (
             <div className="loading-screen"> 
-              <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+              <div className="loading-text">Aufnahme erfolgreich!</div>
+              <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                <path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
               </svg>
             </div>
           )}
+  
           {/* Unsichtbares Video und Canvas für Hintergrundverarbeitung */}
-          <video className="hidden" ref={videoRef2} style={{ display: "none" }} autoPlay muted></video>
+          <video className="hidden" ref={videoRef2} style={{ display: "none" }} autoPlay muted />
           <canvas className="hidden" ref={canvasRef2} style={{ display: "none" }}></canvas>
-
-          {/* Fotoanzeige nach Aufnahme */}
-        
         </div>
-        
+  
+        {/* Weitere UI-Elemente */}
         {!isLoading && imageUrl && (
           <>
             <div className="captured-image-container">
-              
               <img src={imageUrl} alt="Captured" />
             </div>
             
             {!handInPosition && (
               <div className="controls">
-              
-              {processStartCount >= 1 && !isActive && (
-                <>
-                  <div className="button-row">
-                    
-                    <button className="repeatButton" onClick={repeatCapture}>
-                      Wiederholen
-                    </button>
-                    <button className="continueButton" onClick={startProcess}>
-                      Weiter
-                    </button>
-                  </div>
-                </>
+                {processStartCount >= 1 && !isActive && (
+                  <>
+                    <div className="button-row">
+                      <button className="repeatButton" onClick={repeatCapture}>
+                        Wiederholen
+                      </button>
+                      <button className="continueButton" onClick={startProcess}>
+                        Weiter
+                      </button>
+                    </div>
+                  </>
                 )}
-              {processFinished && (
-                <>
+                {processFinished && (
                   <button className="repeatButton" onClick={repeatCapture}>
-                      Wiederholen
+                    Wiederholen
                   </button>
-                </>
-              )}
+                )}
               </div>
             )}
           </>
         )}
-        {/*<button className="position-button" onClick={() => stopProcessAndCapture()}>Aufnahme</button>*/}
       </div>
     </div>
   );
+  
 
 };
 

@@ -57,3 +57,74 @@
 .coordinates {
   background-color: transparent;
 }
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); /* Grau durchscheinend */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  border-radius: 8px;
+}
+
+.overlay-text {
+  position: inherit;
+  top: 10%;
+  font-size: 1.8em;
+  color: white;
+  font-weight: bold;
+  background-color: transparent;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  position: absolute;
+  width: 90px;
+  aspect-ratio: 1;
+  border: 15px solid #303030;
+  border-radius: 50%;
+  position: relative;
+  transform: rotate(45deg);
+  background-color: transparent;
+}
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: -15px;
+  border-radius: 50%;
+  border: 15px solid #fab427;
+  animation: l18 1.5s infinite linear;
+}
+@keyframes l18 {
+    0%   {clip-path:polygon(50% 50%,0 0,0    0,0    0   ,0    0   ,0    0   )}
+    25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0   ,100% 0   ,100% 0   )}
+    50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+    75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0    100%,0    100%)}
+    100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0    100%,0    0   )}
+}
+
+.loader-text {
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 1.5em;
+}
+
+.calDone-text1 {
+ position: absolute;
+ top: 35%;
+  background-color: transparent;
+  color: #e3e3e3;
+  font-size: 1.3em;
+  
+}
+.calDone-text2 {
+  position: absolute;
+  top: 60%;
+  background-color: transparent;
+  color: #e3e3e3;
+  font-size: 1.3em;
+  
+}

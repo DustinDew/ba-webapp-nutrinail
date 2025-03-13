@@ -42,8 +42,8 @@ const useInitializeCamera = (videoRef, setVideoSize, processVideoFrame) => {
           try {
             // Ändere die Auflösung mittels applyConstraints
             await videoTrack.applyConstraints({
-              width: { ideal: 640 },
-              height: { ideal: 480 }
+              width: { ideal: 400 },
+              height: { ideal: 300 }
             });
             console.log("Auflösung wurde auf 640x480 angepasst");
           } catch (err) {

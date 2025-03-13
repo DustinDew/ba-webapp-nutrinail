@@ -46,17 +46,26 @@ const Dialog = ({changeShowScrollIndc, updateTargetCoordsLeft, updateTargetCoord
       <div className="card">
         {cardIndex === 0 && (
           <>
-            <h2>Kalibrierung Rechts</h2>
+          {calSide === "Right" && (
+            <>
+              <h2>Kalibrierung Rechts</h2>
               <HandCalibration updateCalSide={() => setCalSide("Left")} handSide={"Left"} updateHandSide={(side) => setHandSide(side)} updateButtonStateRight={()=>setButtonStateRight(false)} updateTargetCoordsLeft={(arr) => updateTargetCoordsLeft(arr)} updateTargetCoordsRight={(arr) => updateTargetCoordsRight(arr)}/>
-              
+            </>
+          )}
+          {calSide === "Left" && (
+            <>
+              <h2>Kalibrierung Links</h2>
+              <HandCalibration handSide={"Right"} updateHandSide={(side) => setHandSide(side)} updateButtonStateLeft={()=>setButtonStateLeft(false)} updateTargetCoordsLeft={(arr) => updateTargetCoordsLeft(arr)} updateTargetCoordsRight={(arr) => updateTargetCoordsRight(arr)}/>
+            </>
+          )}
               <button className="backButton" onClick={backButton}>Zurück</button>
-              <button className={`continueBttn ${!buttonStateRight ? "active" : "disabled"}`} disabled={buttonStateRight} onClick={ () => {changeCardIndex();}}>Weiter</button>
+              <button className={`continueBttn ${!buttonStateLeft ? "active" : "disabled"}`} disabled={buttonStateLeft} onClick={ () => {changeCardIndex();}}>Weiter</button>
           </>
         )}
         {cardIndex === 1 && (
           <>
-            <h2>Kalibrierung Links</h2>
-            <HandCalibration handSide={"Right"} updateHandSide={(side) => setHandSide(side)} updateButtonStateLeft={()=>setButtonStateLeft(false)} updateTargetCoordsLeft={(arr) => updateTargetCoordsLeft(arr)} updateTargetCoordsRight={(arr) => updateTargetCoordsRight(arr)}/>
+            <h2>Schritt 2</h2>
+            <p>Weitere Erklärungen Hier!</p>
             <button className="backButton" onClick={backButton}>Zurück</button>
             <button className={`continueBttn ${!buttonStateLeft ? "active" : "disabled"}`} disabled={buttonStateLeft} onClick={ () => {changeCardIndex(); changeStart()}}>Weiter</button>
           </>
