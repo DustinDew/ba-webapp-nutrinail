@@ -96,7 +96,7 @@
   position: absolute;
   inset: -15px;
   border-radius: 50%;
-  border: 15px solid #fab427;
+  border: 15px solid #b4b4b4;
   animation: l18 1.3s infinite linear;
 }
 @keyframes l18 {

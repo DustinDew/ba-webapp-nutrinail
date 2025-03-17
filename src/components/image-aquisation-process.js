@@ -58,7 +58,7 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
   );
 
   const tolerance = 20;
-  const boxSize = 60;
+  const boxSize = 65;
 
   const stopProcessAndCapture = useCallback(async () => {
     if (handLabel === "lh") {
@@ -114,7 +114,7 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
   
     hands.setOptions({
       maxNumHands: 1,
-      modelComplexity: 1,
+      modelComplexity: 0,
       minDetectionConfidence: detectionConfidence,
       minTrackingConfidence: 0.5,
     });
@@ -374,8 +374,8 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
                     position: "absolute",
                     left: "50%",
                     top: "50%",
-                    width: "200px",
-                    height: "200px",
+                    width: "150px",
+                    height: "150px",
                     opacity: 0.5,
                     pointerEvents: "none", // Verhindert Interaktionen mit dem Bild
                   }}
@@ -388,15 +388,15 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
                     position: "absolute",
                     left: "50%",
                     top: "50%",
-                    width: "200px",
-                    height: "200px",
+                    width: "150px",
+                    height: "150px",
                     opacity: 0.5,
                     pointerEvents: "none", // Verhindert Interaktionen mit dem Bild
                   }}
                 />
               </>)}
 
-              {handSide === "Right" && handLabel != "ld"  &&(<>
+              {handSide === "Right" && handLabel !== "ld"  &&(<>
                 {targetPositionsLeft.map((target, index) => (
                   <FingerTipGrey
                   className="fingertip-target"
@@ -404,8 +404,8 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
                     position: "absolute",
                     left: `${target.x * videoSize.width}px`,
                     top: `${target.y * videoSize.height + 25}px`,
-                    width: "200px",
-                    height: "200px",
+                    width: "150px",
+                    height: "150px",
                     opacity: 0.5,
                     pointerEvents: "none", // Verhindert Interaktionen mit dem Bild
                   }}
@@ -413,7 +413,7 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
                 
                 ))}
               </>)}
-              {handSide === "Left" && handLabel != "rd" &&(<>
+              {handSide === "Left" && handLabel !== "rd" &&(<>
                 {targetPositionsRight.map((target, index) => (
                   <FingerTipGrey
                   className="fingertip-target"
@@ -421,8 +421,8 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
                     position: "absolute",
                     left: `${target.x * videoSize.width}px`,
                     top: `${target.y * videoSize.height + 25}px`,
-                    width: "200px",
-                    height: "200px",
+                    width: "150px",
+                    height: "150px",
                     opacity: 0.5,
                     pointerEvents: "none", // Verhindert Interaktionen mit dem Bild
                   }}

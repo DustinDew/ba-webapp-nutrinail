@@ -28,6 +28,7 @@ body {
   opacity: 0;
 }
 
+
 /* Standardstatus für die erste Seite */
 .page-1.first-load {
   left: 50%;
@@ -72,8 +73,8 @@ body {
 }
 
 .scroll-indicator .dot {
-  width: 10px; /* Größe der Kugeln */
-  height: 10px;
+  width: 8px; /* Größe der Kugeln */
+  height: 8px;
   margin: 8px 0;
   border-radius: 50%; /* Runde Form */
   background-color: rgb(36, 67, 106); /* Standardfarbe der Kugeln */

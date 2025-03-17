@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 * { 
   background-color: #182a43;
   box-sizing: border-box;
@@ -11,293 +12,80 @@ body, html {
   padding: 0;
   height: 100%;
 }
-.resetButton {
-  position: relative;
-  bottom: 220px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.1em;
-  width: 270px;
-  height: 40px;
-  color: #ffffff;
-  background-color: #16528b;
-  border-radius: 8px;
-  border: none;
-  box-shadow: 0 4px 5px 0 rgba(44, 49, 70, 0.214), 0 4px 8px 0 rgba(0,0,0,0.19);
-}
-
-
-.resetButton:hover {
-  background-color: #3f6eb5;
-}
-.resetButton:active {
-  background-color: #3f6eb5;
-}
-.resetButton.fade-in {
-  opacity: 1;
-}
-.resetButton.fade-out {
-  opacity: 0;
-}
-.startButton {
-  font-family: "Raleway", serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-weight: 450;
-  font-size: 1.1em;
-  display: block;
-  margin: auto;
-  width: 200px;
-  height: 50px;
-  color: #ffffff;
-  background-color: #E0B539;
-  border-radius: 5px;
-  margin-top: 40px; 
-  box-shadow: 0 4px 5px 0 rgba(17, 28, 52, 0.381), 0 4px 10px 0 rgba(0,0,0,0.19);
-  border: none;
-}
-.startButton:hover {
-  background-color: #c3913b;
-}
-.startButton:active {
-  background-color: #c3913b;
-};
-
-.startButton p {
-  font-size: 5em;
-  background-color: #E0B539;
-}
-.nutrinail {
-  font-family: "Raleway", serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-weight: 200;
-  text-align: center;
-  color: #ebebeb;
-  font-size: 3.5em;
-  background-color: #ffffff00;
-}
-
 
 .welcomeText {
   height: 100vw;
-  font-family: "Raleway", serif;
-  font-optical-sizing: auto;
-  font-style: normal;
   font-weight: 350;
   hyphens: auto; 
-	text-align: center;
+  text-align: center;
   line-height: 1.5;
   font-size: medium;
-  margin: 0px;
-  
-  
   background-color: #ffffff00;
 }
-.welcomeText img {
-  
+
+.logo-hs {
   position: absolute;
-  top: 60px;
-  width: 150px;
+  top: 80px;
+  width: 120px;
   background-color: transparent;
 }
-.welcomeText h3 {
-  font-family: "Raleway", serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-weight: 350;
+
+.welcomeText h3, 
+.welcomeText h2, 
+.welcomeText h1 {
+  font-weight: 250;
   text-align: center;
   color: #cfe9ff;
   background-color: #ffffff00;
 }
+
 .welcomeText h2 {
-  font-family: "Raleway", serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-weight: 250;
   font-size: 0.9em;
-  text-align: center;
-  color: #cfe9ff;
-  background-color: #ffffff00;
   margin-top: -30px;
   margin-bottom: 50px;
 }
 
 .welcomeText h1 {
-  font-family: "Raleway", serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-weight: 250;
-  font-size: 4em;
+  font-size: 1.5em;
+}
+
+.intro-text {
+  font-family: "Raleway";
   text-align: center;
-  color: #cfe9ff;
-  background-color: #ffffff00;
-  margin-top: 10px;
-  margin-bottom: 100px;
-}
-
-.infoCard {
-  text-align: center;
-  margin-bottom: 20px;
-  margin-top: 80px;
-  padding: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  width: 250px;
-  height: 100px;
-  background-color: #041c31;
- 
-}
-.infoCard p {
-  margin-left: 50px;
-  color: #dcdcdc;
-  background-color: #ffffff00;
-}
-
-.camera-view {
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 0%;
-  opacity: 1;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.cv.hidden {
-  opacity: 0;
-}
-.cv.visible {
-  opacity: 1;
-}
-
-.dialog {
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.box.fade-in .dialog{
-  background-color: #ffffff00;
-  opacity: 1;
-}
-.box.fade-out .dialog {
-  opacity: 0;
-  scale: 0.95;
-}
-.box.fade-out .camera-view {
-  opacity: 0;
-}
-.box.box.fade-in .camera-view {
-  height: 100vh;  /* Volle Bildschirmhöhe */  
-}
-.flippable-card {
-  width: 250px;
-  height: 150px;
-  perspective: 1000px;
-  margin: 20px auto;
-  transition: transform 0.6s ease-in-out;
-  
-}
-
-.card-inner {
+  color: #ffffff;
+  font-size: 1em;
+  font-weight: 300;
   width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.6s ease-in-out;
-}
-
-.flippable-card.flipped .card-inner {
-  transform: rotateY(180deg); 
-}
-
-.card-front,
-.card-back {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  backface-visibility: hidden;
- 
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-.card-front {
-  background-color: rgb(13, 25, 42);
-  color: #dcdcdc;
-}
-.card-front p {
-  background-color: #ffffff00;
-  color: #dcdcdc;
-}
-.card-back {
-  background-color: rgb(9, 19, 31);
-  color: #dcdcdc;
-  transform: rotateY(180deg);
-}
-
-.card-back p {
-  background-color: #ffffff00;
-  color: #dcdcdc;
-}
-.backText {
-  background-color: #ffffff00;
-}
-
-.darkBackground {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #041731;
-  z-index: -1;
-}
-
-.main-container.dark {
-  background-color: #10121664;
-}
-.main-container.bright {
-  background-color: #5a7aa7;
-}
-
-.button-container {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 100vw;
+  margin-top: 130px;
   background-color: transparent;
+  word-spacing: 2px;
+  line-height: 1.5;
+  padding-left: 30px;
+  padding-right: 30px;
 }
-.main-container {
-  margin: 0;
+
+.colored-letter {
+  font-weight: 600;
+  color: #f4b700; /* Hier kannst du eine beliebige Farbe wählen */
 }
-.arrow.active {
+
+
+.arrow.active,
+.arrow.off {
   position: fixed;
-  bottom: 15%;
+  bottom: 15vh;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60px; /* An SVG-Größe angepasst */
+  width: 60px;
   height: 60px;
   background-color: transparent;
-
 }
 
 .arrow.off {
-  position: fixed;
-  bottom: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60px; /* An SVG-Größe angepasst */
-  height: 60px;
-  background-color: transparent;
-  animation: fadeOut 1s forwards; /* Nur die Ausblend-Animation */
+  animation: fadeOut 1s forwards;
 }
 
 .arrow svg {
@@ -310,23 +98,133 @@ body, html {
 }
 
 @keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-    transform-origin: center;
-  }
-  100% {
-    transform: scale(1);
-  }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); transform-origin: center; }
+  100% { transform: scale(1); }
 }
 
 @keyframes fadeOut {
-  0% {
-    opacity: 1;
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.content-button {
+  font-size: 1em;
+  width: 150px;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  background-color: #21abbeff;
+}
+
+.card-text-1,
+.card-text-2 {
+  position: absolute;
+  top: 66%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(255, 255, 255);
+  font-size: 1.1em;
+  font-family: "Raleway", serif;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+  background: transparent;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.front-container-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: transparent;
+}
+
+.logo-nn {
+  width: 70px;
+  opacity: 0.8;
+  background-color: transparent;
+}
+
+.flip-card-container {
+  position: absolute;
+  top: 30vh;
+  left: 50%;
+  transform: translateX(-50%);
+  
+}
+
+.header-container {
+  margin-left: -8px;
+  position: fixed;
+  top: 2vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.header-container h1 {
+  color: #ffffff;
+  font-family: "Raleway", serif;
+  font-weight: 250;
+}
+.backText {
+  background-color: rgb(9, 19, 31);
+}
+/* Media Query für größere Bildschirme (ab 768px) */
+@media screen and (min-width: 768px) {
+  .welcomeText {
+    font-size: 1.2em;
+    max-width: 60%;
+    margin: auto;
   }
-  100% {
-    opacity: 0;
+
+  .logo-hs {
+    width: 160px;
+    top: 100px;
+  }
+  .intro-text {
+    font-size: 1.2em;
+    margin-top: 150px;
+  }
+  .welcomeText h1 {
+    font-size: 2em;
+  }
+
+  .welcomeText h2 {
+    font-size: 1.2em;
+  }
+
+  .arrow.active,
+  .arrow.off {
+    bottom: 5vh;
+    width: 70px;
+    height: 70px;
+  }
+
+  .content-button {
+    font-size: 1.2em;
+    width: 180px;
+    height: 45px;
+  }
+
+  .card-text-1,
+  .card-text-2 {
+    font-size: 1.5em;
+    max-width: 80%;
+  }
+.backtext p{
+  color: white;
+  background-color: transparent;
+}
+  .logo-nn {
+    width: 90px;
   }
 }

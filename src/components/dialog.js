@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../css/dialog.css"
 import HandCalibration from "./hand-calibration";
-
+import processPlan from "../assets/process-plan.svg"
 const Dialog = ({changeShowScrollIndc, updateTargetCoordsLeft, updateTargetCoordsRight, changeScrollable, changeShowCV, changeStart, changeShowCard, changeProcessState,  changeBoxVis}) => {
   const [cardIndex, setCardIndex] = useState(0);
   const [buttonStateRight, setButtonStateRight] = useState(true);
@@ -22,7 +22,7 @@ const Dialog = ({changeShowScrollIndc, updateTargetCoordsLeft, updateTargetCoord
       setCardIndex(cardIndex - 1);
       return;
     };
-    if (cardIndex === 0) {
+    if (cardIndex === 1) {
       navigator.mediaDevices.getUserMedia({ video: true })
       .then((stream) => {
         stream.getTracks().forEach(track => track.stop());
@@ -45,7 +45,75 @@ const Dialog = ({changeShowScrollIndc, updateTargetCoordsLeft, updateTargetCoord
   return (
     <div className="dialog">
       <div className="card">
-        {cardIndex === 0 && (
+      {cardIndex === 0 && (
+          <>
+            <h2>Prozessablauf</h2>
+            <div className="process-plan">
+              
+              <div className="steps">
+                <div className="step">
+                  <div className="step-number">1</div>
+                  <div className="step-content">
+                    <h3>Handkalibrierung</h3>
+                    <p>Die Abstände zwischen deinen Fingern werden erfasst. Zielbereiche erscheinen auf dem Kamera-Stream, in denen sich deine Finger befinden müssen. Alles andere passiert automatisch.</p>
+                  </div>
+                </div>
+
+                <div className="step">
+                  <div className="step-number">2</div>
+                  <div className="step-content">
+                    <h3>Bildaufnahme</h3>
+                    <p>Zuerst Zeige- bis kleiner Finger, dann der Daumen. Sobald deine Finger in den Zielbereichen sind, wird automatisch ein Bild aufgenommen.</p>
+                  </div>
+                </div>
+
+
+                <div className="step">
+                  <div className="step-number">3</div>
+                  <div className="step-content">
+                    <h3>Prozessabschluss</h3>
+                    <p>Nach der Aufnahme folgt ein kurzer Fragebogen. Damit hilfst du uns, die Daten besser zu verstehen.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <button className="backButton" onClick={backButton}>Zurück</button>
+            <button className={`continueBttn ${true ? "active" : "disabled"}`} onClick={ () => {changeCardIndex()}}>Weiter</button>
+          </>
+        )}
+        {cardIndex === 1 && (
+          <>
+          <h2>Wichtig für die Bildaufnahme</h2>
+            <div className="rules-container">
+              
+              <div className="rules">
+              
+                <div className="rule">
+                  <div className="step-number">!</div>
+                  <p>Einen flachen, gut belichteten Untergrund wählen – am besten mit natürlichem Licht.</p>
+                </div>
+                <div className="rule">
+                <div className="step-number">!</div>
+                  <p>Die Hand flach auf den Untergrund legen und absolut stillhalten.</p>
+                </div>
+                <div className="rule">
+                  <div className="step-number">!</div>
+                  <p>Das Handy zur Positionierung bewegen – nicht die Hand, die fotografiert wird.</p>
+                </div>
+                <div className="rule">
+                  <div className="step-number">!</div>
+                  <p>Sobald die Aufnahme gestartet wird, stillhalten bis das Bild angezeigt wird. </p>
+                </div>
+              </div>
+              <p className="continue-text">Klicke auf <span >Weiter</span>, um mit der Kalibrierung zu starten.</p>
+            </div>
+
+            <button className="backButton" onClick={backButton}>Zurück</button>
+            <button onClick={() => {changeCardIndex()}}>Weiter</button>
+          </>
+        )}
+        {cardIndex === 2 && (
           <>
           {!calibrationFinished ? (
             <>
@@ -78,26 +146,11 @@ const Dialog = ({changeShowScrollIndc, updateTargetCoordsLeft, updateTargetCoord
 
           
               <button className="backButton" onClick={backButton}>Zurück</button>
-              <button className={`continueBttn ${!buttonStateLeft ? "active" : "disabled"}`} disabled={buttonStateLeft} onClick={ () => {changeCardIndex(); setCalibrationFinished(true)}}>Weiter</button>
+              <button className={`continueBttn ${!buttonStateLeft ? "active" : "disabled"}`} disabled={buttonStateLeft} onClick={ () => {changeCardIndex(); setCalibrationFinished(true); changeStart(); changeShowCard();changeShowCV()}}>Weiter</button>
           </>
         )}
-        {cardIndex === 1 && (
-          <>
-            <h2>Schritt 2</h2>
-            <p>Weitere Erklärungen Hier!</p>
-            <button className="backButton" onClick={backButton}>Zurück</button>
-            <button className={`continueBttn ${!buttonStateLeft ? "active" : "disabled"}`} disabled={buttonStateLeft} onClick={ () => {changeCardIndex(); changeStart()}}>Weiter</button>
-          </>
-        )}
-        {cardIndex === 2 && (
-          <>
-            <h2>Schritt 3:</h2>
-            <p>Sobald alle Finger in Position sind, wird automatisch ein Bild aufgenommen, die Hand muss solange still gehalten werden.</p>
-      
-            <button className="backButton" onClick={backButton}>Zurück</button>
-            <button onClick={() => {changeShowCard();changeShowCV()}}>Starten</button>
-          </>
-        )}
+        
+        
         <div className="ball-row">
           <div className={`kugel ${cardIndex === 0 ? "on" : "off"}`} onClick={() => setCardIndex(0)}></div>
           <div className={`kugel ${cardIndex === 1 ? "on" : "off"}`} onClick={() => setCardIndex(1)}></div>

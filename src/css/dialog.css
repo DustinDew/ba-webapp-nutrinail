@@ -14,7 +14,7 @@
 
 .card h2 {
   font-family: "Raleway", serif;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 300;
   margin-bottom: 20px;
   text-align: center;
@@ -153,4 +153,140 @@
   background-color: transparent;
   color: #ffffff;
   
+}
+
+.process-plan {
+  text-align: center;
+  color: #dfdfdf;
+  background-color: transparent;
+  padding-left: 15px; /* Weniger Padding für kompaktere Darstellung */
+  padding-right: 15px;
+}
+
+.process-plan h2 {
+  font-size: 1.4rem; /* Kleiner als vorher */
+  font-weight: 300;
+  margin-bottom: 12px; /* Weniger Abstand */
+  color: #dfdfdf;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Weniger Abstand zwischen den Schritten */
+  background-color: rgb(13, 25, 42);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  background: rgba(49, 75, 105, 0); /* Transparente Karten-Optik */
+  padding: 6px; /* Weniger Innenabstand */
+  border-radius: 6px;
+  
+}
+
+.step-number {
+  width: 35px;
+  height: 35px;
+  background: rgb(216, 163, 30); /* Passend zur "on"-Kugel */
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+.step-content {
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.331);
+}
+.step-content h3 {
+  font-size: 1rem; /* Kleinere Überschrift */
+  margin-bottom: 2px; /* Weniger Abstand */
+  color: #dfdfdf;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.step-content p {
+  font-size: 0.8rem; /* Kleinere Beschreibung */
+  color: #b0b0b0;
+  line-height: 1.2; /* Weniger Zeilenhöhe */
+  text-align: left;
+}
+
+.rules-container {
+  
+  text-align: center;
+  color: #dfdfdf;
+  background-color: transparent;
+  padding-left: 21px;
+  padding-right: 21px;
+}
+
+.rules-container h2 {
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin-bottom: 10px;
+  color: #dfdfdf;
+}
+
+.rules {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  gap: 10px;
+}
+
+.rule {
+  display: flex;
+  align-items: center;
+  background: rgba(41, 56, 92, 0.668);
+  padding: 13px;
+  border-radius: 6px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.rule-number {
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 8px;
+  color: #144e85;
+  background: #dfdfdf;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rule p {
+  display: block;
+  margin: auto;
+  align-items: center;
+  width: 100%;
+  font-size: 0.85rem;
+  color: #f3f3f3;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.continue-text {
+  position: absolute;
+  left: 0;
+  bottom: 12%;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #dfdfdf;
+}
+
+.continue-text span {
+  background-color: transparent;
+  font-weight: bold;
 }

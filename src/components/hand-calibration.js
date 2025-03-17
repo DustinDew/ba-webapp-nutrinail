@@ -52,8 +52,8 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
   const targetPositions = useMemo(() => {
     if (handSide === "Right") {
       return [
-        { x: 0.85, y: 0.4 },
-        { x: 0.65, y: 0.35 },
+        { x: 0.86, y: 0.4 },
+        { x: 0.63, y: 0.35 },
         { x: 0.4, y: 0.37 },
         { x: 0.15, y: 0.45 },
       ];
@@ -67,7 +67,7 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
     }
   }, [handSide]);
 
-  const tolerance = 20;
+  const tolerance = 10;
   const targetAreaSize = 80;
 
   const [landmarkCoordinates, setLandmarkCoordinates] = useState([]);
@@ -79,7 +79,7 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
 
     hands.setOptions({
       maxNumHands: 1,
-      modelComplexity: 1,
+      modelComplexity: 0,
       minDetectionConfidence: detectionConfidence,
       minTrackingConfidence: 0.5,
     });
@@ -127,7 +127,7 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
         const normalizedY = y / canvas.height;
     
         const fingerInPosition =
-          Math.abs(x - target.x * canvas.width) <= tolerance && Math.abs(y - target.y * canvas.height) <= tolerance + 40;
+          Math.abs(x - target.x * canvas.width) <= tolerance + 10 && Math.abs(y - target.y * canvas.height) <= tolerance + 40;
     
         // Zeichne den Punkt und ändere die Farbe, je nachdem, ob der Finger im Zielbereich ist oder nicht
         ctx.beginPath();
@@ -278,9 +278,9 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
               style={{
                 position: "absolute",
                 left: `${target.x * videoSize.width}px`,
-                top: `${target.y * videoSize.height + 25}px`,
-                width: "200px",
-                height: "200px",
+                top: `${target.y * videoSize.height + 10}px`,
+                width: "220px",
+                height: "220px",
                 fill: "red", // Hier kannst du die Farbe setzen
                 opacity: 0.5,
                 pointerEvents: "none", // Verhindert Interaktionen mit dem Bild
