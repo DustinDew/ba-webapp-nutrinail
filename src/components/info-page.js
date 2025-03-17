@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import "../css/info-page.css";
-import hochschuleLogo from "../assets/logo-hsFulda.svg";
 import FlippableCard from "./flip-card";
 import ContentPage from "./content-page";
 import bannerImg from "../assets/35186134-fuer-die-analyse-der-fingernagelstruktur-wurden-fotos-gemacht-2s70.jpg"
 import cardImgHand from "../assets/pexels-thisisengineering-3913025.jpg"
 import logo from "../assets/logo-nutrinail.svg"
-import processImg from "../assets/process.svg"
 import team from "../assets/team-ill.jpg"
 
 const InfoPage = ({ changeShowScrollIndc, changeScrollable, firstScroll }) => {
-  const [processStarted, setProcessStarted] = useState(false);
-  const [boxVisible, setBoxVisible] = useState(false);
-  const [start, setStart] = useState(false);
-  const [showCard, setShowCard] = useState(false);
   const [infoContentPage, setInfoContentPage] = useState(false);
 
 
@@ -32,7 +26,7 @@ const InfoPage = ({ changeShowScrollIndc, changeScrollable, firstScroll }) => {
         <h1>NUTRINAIL</h1>
       </div>
       <p className="intro-text">
-        Die Zukunft der Gesundheitsforschung liegt im <span className="colored-detail">Det</span><span className="colored-letter"></span><span className="colored-letter">ai</span><span className="colored-detail">l.</span>
+        Die Zukunft unserer Gesundheit liegt im <span className="colored-detail">Det</span><span className="colored-letter"></span><span className="colored-letter">ai</span><span className="colored-detail">l.</span>
       </p>
 
       <div className="welcomeText">
@@ -87,7 +81,7 @@ const InfoPage = ({ changeShowScrollIndc, changeScrollable, firstScroll }) => {
           bannerImg={bannerImg}
           contentBody={
             <>
-              <h2>NutriNAIL: Wie Fingernägel Aufschluss über unsere Gesundheit geben können</h2>
+              <h2>NutriNAIL: Was deine Fingernägel über deine Gesundheit verraten</h2>
               <p>
                 NutriNAIL ist ein Forschungsprojekt der Hochschule Fulda, das untersucht, wie das Aussehen und die Zusammensetzung von Fingernägeln Rückschlüsse auf die Gesundheit geben können. Ziel des Projekts ist es, Zusammenhänge zwischen den Merkmalen der Nägel und verschiedenen gesundheitlichen Aspekten zu erforschen, um die Aussagen zu überprüfen, die oft über die Nägel gemacht werden.</p>
               <p>

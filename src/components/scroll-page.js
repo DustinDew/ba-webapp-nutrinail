@@ -11,8 +11,7 @@ const ScrollPage = () => {
   const [firstScroll, setFirstScroll] = useState(true); // Dieser State wird beim ersten Scrollen geändert
   const [start , setStart] = useState(false);
   const [showScrollIndc, setshowScrollIndc] = useState(true);
-  const [showContentPage, setShowContentPage] = useState(false);
-
+ 
   // Setze firstLoad auf false nach dem ersten Render
   useEffect(() => {
     // Dieser Effekt läuft nur einmal nach dem ersten Render
@@ -92,7 +91,7 @@ const ScrollPage = () => {
   return (
     <div className="pages-column">
       <div className={`page-1 ${firstLoad ? "first-load": getClassNamePage1(pageIndex)}`}>
-        <InfoPage showContentPage={showContentPage} changeShowScrollIndc={() => setshowScrollIndc(!showScrollIndc)}firstScroll={firstScroll} changeScrollable={(boolean) => setScrollable(boolean)} updatePageIndex={() => setPageIndex(1)} />
+        <InfoPage changeShowScrollIndc={() => setshowScrollIndc(!showScrollIndc)}firstScroll={firstScroll} changeScrollable={(boolean) => setScrollable(boolean)} updatePageIndex={() => setPageIndex(1)} />
       </div>
       <div className={`page-2 ${firstLoad ? "first-load" : getClassNamePage2(pageIndex)}`}>
         <ParticipatePage start={start} changeStart={() => setStart(!start)} changeScrollable={(boolean) => setScrollable(boolean)} changeShowScrollIndc={() => setshowScrollIndc(!showScrollIndc)}/>

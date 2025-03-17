@@ -58,7 +58,6 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
   );
 
   const tolerance = 20;
-  const boxSize = 65;
 
   const stopProcessAndCapture = useCallback(async () => {
     if (handLabel === "lh") {
@@ -116,7 +115,7 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
       maxNumHands: 1,
       modelComplexity: 0,
       minDetectionConfidence: detectionConfidence,
-      minTrackingConfidence: 0.5,
+      minTrackingConfidence: 0.4,
     });
   
     hands.onResults((results) => {

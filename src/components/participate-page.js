@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react";
+import React, {useState } from "react";
 import ImageAquisation from "./image-aquisation-process";
 import Dialog from "./dialog";
 import "../css/participate-page.css";
