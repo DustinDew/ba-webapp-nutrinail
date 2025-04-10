@@ -1,6 +1,6 @@
 import React, {useEffect,useState } from "react";
 import "../css/content-page.css"
-
+import backIcon from "../assets/back-icon.svg"
 const ContentPage = ({bannerImg, contentBody, changeShowScrollIndc, changeScrollable, updateInfoContentPage, showContent}) => {
   const [disable, setDisable] = useState(false);
 
@@ -26,14 +26,14 @@ const ContentPage = ({bannerImg, contentBody, changeShowScrollIndc, changeScroll
       <div className={`content-page ${!disable ? "active" : "hidden"}`}>
         <div className="top-bar">
           <button className="content-back-button" onClick={disableContentPage}>
-            &#10094;
+          <img src={backIcon} alt="back"></img>
           </button>
         </div>
         <div className="content-container">
           
           <div className="image-container">
             
-            <img src={bannerImg} alt="Banner Image"></img>
+            <img src={bannerImg} alt="Banner"></img>
           </div>
           <div className="line"></div>
           <div className="content-body">{contentBody}</div>

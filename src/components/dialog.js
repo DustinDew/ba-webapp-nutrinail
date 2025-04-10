@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../css/dialog.css"
 import HandCalibration from "./hand-calibration";
-import processPlan from "../assets/process-plan.svg"
+
 const Dialog = ({changeShowScrollIndc, updateTargetCoordsLeft, updateTargetCoordsRight, changeScrollable, changeShowCV, changeStart, changeShowCard, changeProcessState,  changeBoxVis}) => {
   const [cardIndex, setCardIndex] = useState(0);
   const [buttonStateRight, setButtonStateRight] = useState(true);
@@ -18,7 +18,6 @@ const Dialog = ({changeShowScrollIndc, updateTargetCoordsLeft, updateTargetCoord
 
   const backButton = () => {
     if(cardIndex >= 1) {
-      const currentIndex = cardIndex;
       setCardIndex(cardIndex - 1);
       return;
     };
@@ -110,7 +109,7 @@ const Dialog = ({changeShowScrollIndc, updateTargetCoordsLeft, updateTargetCoord
             </div>
 
             <button className="backButton" onClick={backButton}>Zurück</button>
-            <button onClick={() => {changeCardIndex()}}>Weiter</button>
+            <button className="continueBttn" onClick={() => {changeCardIndex()}}>Weiter</button>
           </>
         )}
         {cardIndex === 2 && (

@@ -166,17 +166,7 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
     
       setHandInPosition(allFingersInPosition);
     
-      if (allFingersInPosition) {
-        targetPositions.forEach((target) => {
-          const targetX = target.x * canvas.width;
-          const targetY = target.y * canvas.height;
-          ctx.beginPath();
-          ctx.rect(targetX - targetAreaSize / 2, targetY - targetAreaSize / 2, targetAreaSize, targetAreaSize);
-          ctx.strokeStyle = "green";
-          ctx.lineWidth = 2;
-          ctx.stroke();
-        });
-      }
+    
     });
     
 
@@ -268,8 +258,8 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
       >
         {isActive && !calDone && (
           <>
-            <video ref={videoRef} className="camera-video" autoPlay playsInline muted />
-            <canvas ref={canvasRef} className="camera-canvas" />
+            <video ref={videoRef} className="cal-camera-video" autoPlay playsInline muted />
+            <canvas ref={canvasRef} className="cal-camera-canvas" />
             
             {/* Fingerspitzen-SVG als Zielbereiche anzeigen */}
             {targetPositions.map((target, index) => (
@@ -299,11 +289,11 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
         <canvas className="hidden" ref={canvasRef2} style={{ display: "none" }}></canvas>
 
         {!isActive && handSide === "Left" && (<> 
-          <div className="loader-text">Bitte warten..</div>
+          <div className="loader-text">Nächste: Linke Hand</div>
           <div className="loader"></div>
         </>)}
         {!isActive && handSide === "Right" && showLoader && (<> 
-          <div className="loader-text">Bitte warten..</div>
+          <div className="loader-text">Wird verarbeitet..</div>
           <div className="loader"></div>
         </>)}
         {calDone && (<>

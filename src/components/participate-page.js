@@ -9,7 +9,6 @@ import process from "../assets/process.svg"
 
 const ParticipatePage = ({changeShowScrollIndc, start, changeStart, changeScrollable}) => {
   const [processStarted, setProcessStarted] = useState(false);
-  const [key, setKey] = useState(0);
   const [boxVisible, setBoxVisible] = useState(false);
   const [showCard, setShowCard] = useState(false);
   const [restart, setRestart] = useState(false);
@@ -29,7 +28,7 @@ const ParticipatePage = ({changeShowScrollIndc, start, changeStart, changeScroll
   
   const updateParticipateContentPage = () => {
     if (participateContentPage !== !participateContentPage) {
-      changeShowScrollIndc(); 
+      setTimeout(() => {changeShowScrollIndc();}, 360) 
       changeScrollable(false); // Nur ausführen, wenn der Zustand sich ändert
       setParticipateContentPage(!participateContentPage);
     }
@@ -46,7 +45,6 @@ const ParticipatePage = ({changeShowScrollIndc, start, changeStart, changeScroll
     changeScrollable(true);
     setTimeout(() => {
       setProcessStarted(false);
-      setKey(prevKey => prevKey + 1);
       setShowCameraView(false);
       setParticipated(true);
       setFinished(false);
@@ -80,6 +78,7 @@ const ParticipatePage = ({changeShowScrollIndc, start, changeStart, changeScroll
                   
                 </div>
               }
+              updateContentPage={updateParticipateContentPage}
             />
 
             <div className="participateCard">

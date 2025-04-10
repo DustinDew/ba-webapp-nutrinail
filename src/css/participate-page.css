@@ -155,7 +155,7 @@
   padding: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  width: 250px;
+  width: 75vw;
   height: 150px;
   background-color: rgb(13, 25, 42);
 }
@@ -232,7 +232,7 @@
 
 .finished-container {
   background-color: transparent;
-  padding: 30px;
+  padding: 10px;
 }
 
 .finished-container, .thx {
@@ -255,9 +255,9 @@
 .exit-button {
   margin-top: 50px;
   text-align: center;
-  width: 130px;
+  width: 15vh;
   height: 35px;
-  font-size: 18px;
+  font-size: 2vh;
   background-color: #144e85;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.114);
   color: white;

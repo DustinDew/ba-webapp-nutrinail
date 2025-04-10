@@ -6,24 +6,36 @@ import bannerImg from "../assets/35186134-fuer-die-analyse-der-fingernagelstrukt
 import cardImgHand from "../assets/pexels-thisisengineering-3913025.jpg"
 import logo from "../assets/logo-nutrinail.svg"
 import team from "../assets/team-ill.jpg"
+import settings from "../assets/settings.svg"
+import SettingsPage from "./settings";
+import swipeIcon from "../assets/swipe-icon.svg"
 
 const InfoPage = ({ changeShowScrollIndc, changeScrollable, firstScroll }) => {
   const [infoContentPage, setInfoContentPage] = useState(false);
-
+  const [settingsPage, setSettingsPage] = useState(false);
 
   const updateInfoContentPage = () => {
     if (infoContentPage !== !infoContentPage) {
-      changeShowScrollIndc(); 
+      setTimeout(() => {changeShowScrollIndc();}, 360)
+       
       changeScrollable(false); // Nur ausführen, wenn der Zustand sich ändert
       setInfoContentPage(!infoContentPage);
     }
   };
 
+  const updateSettingsPage = () => {
+    if (settingsPage !== !settingsPage) {
+      setTimeout(() => {changeShowScrollIndc();}, 360) 
+      changeScrollable(false); // Nur ausführen, wenn der Zustand sich ändert
+      setSettingsPage(!settingsPage);
+    }
+  };
   return (
     <div className="main-container">
       <div className="header-container">
         <img className="logo-nn" src={logo} alt="logo"></img>
         <h1>NUTRINAIL</h1>
+        <img onClick={updateSettingsPage} id="settings-icon" src={settings}alt="settings"></img>
       </div>
       <p className="intro-text">
         Die Zukunft unserer Gesundheit liegt im <span className="colored-detail">Det</span><span className="colored-letter"></span><span className="colored-letter">ai</span><span className="colored-detail">l.</span>
@@ -40,15 +52,8 @@ const InfoPage = ({ changeShowScrollIndc, changeScrollable, firstScroll }) => {
                 <div className="card-text-1">Entdecke NutriNAIL</div>
               </div>
             }
-            backContent={
-              <div className="backText">
-                <p>Du möchtest wissen worum es bei unserem Projekt geht?</p>
-                <button className="content-button" onClick={()=>{updateInfoContentPage(); changeScrollable(false)}}>
-                  Erfahre mehr!
-                </button>
-                
-              </div>
-            }
+            updateContentPage = {updateInfoContentPage}
+            
           />
           <FlippableCard
             cardImage={team}
@@ -67,15 +72,13 @@ const InfoPage = ({ changeShowScrollIndc, changeScrollable, firstScroll }) => {
       </div>
       </div>
     
-      <div className={`arrow ${firstScroll ? "active" : "off"}`}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24">
-          <path
-            d="M12 17.414 3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z"
-            fill="#5a7aa7"
-          />
-        </svg>
-      </div>
-
+      <div className={`arrow-container ${firstScroll ? "active" : "off"}`}>
+        <div id="swipe-line"></div>
+        <div className={`arrow ${firstScroll ? "active" : "off"}`}>
+          <img id="swipe-icon" src={swipeIcon} alt="settings" />
+        </div>
+        
+      </div>     
       {infoContentPage && (
         <ContentPage
           bannerImg={bannerImg}
@@ -99,7 +102,14 @@ const InfoPage = ({ changeShowScrollIndc, changeScrollable, firstScroll }) => {
 
         />
       )}
-
+      {settingsPage && (
+        <SettingsPage
+          changeShowScrollIndc={changeShowScrollIndc}
+          changeScrollable={(bool) => changeScrollable(bool)}
+          showContent={infoContentPage}
+          updateSettingsPage={updateSettingsPage}
+        />
+      )}
     </div>
   );
 };

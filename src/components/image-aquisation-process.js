@@ -4,6 +4,7 @@ import "../css/CameraView.css";
 import CameraCapture from "./camera-capture";
 import useInitializeCamera from "./useInitializeCamera";
 import { ReactComponent as FingerTipGrey } from "../assets/fingertip-grey.svg";
+import { runHandDetection } from "./image-validation";
 
 const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRight, start, changeStart, processRestart, updateProcessRestart }) => {
 
@@ -287,6 +288,25 @@ const ImageAquisation = ({updateFinished, targetPositionsLeft, targetPositionsRi
       return null;
     }
   };
+
+  useEffect(() => {
+    if (imageUrl) {
+      const handleDetection = async () => {
+        try {
+          const isHandDetected = await runHandDetection(imageUrl); // Handerkennungsfunktion aufrufen
+          if (isHandDetected) {
+            
+          } else {
+        
+          }
+        } catch (error) {
+          console.error("Fehler bei der Handerkennung:", error);
+        }
+      };
+
+      handleDetection(); // Aufruf der Funktion
+    }
+  }, [imageUrl]);
 
   useEffect(() => {
     maxCameraResRef.current = maxCameraRes;

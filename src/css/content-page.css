@@ -33,7 +33,7 @@
   height: 100vh;
   z-index: 9999;
   background-color: #182a43;
-  animation: slideInFromRight 0.4s ease-out;
+  animation: slideInFromRight 0.5s ease-out;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   border-radius: 12px;
   padding: 20px;
@@ -49,14 +49,14 @@
   height: 60px;
   width: 100%;
   padding: 0px;
+  
 }
 
 .top-bar .content-back-button {
   position: absolute;
-  left: -35px;
-  font-size: 2.2em;
-  height: 55px;
-  width: 55px;
+  left: 0vw;
+  
+  
   color: #e5e5e5;
   border: none;
   background: none;
