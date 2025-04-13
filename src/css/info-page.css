@@ -108,13 +108,16 @@ body, html {
   background-color: transparent;
 }
 
-#swipe-line {
-  width: 50vw;
-  height: 3px;
-  background-color: rgba(121, 128, 145, 0.687);
-  border-radius: 5px;
+.seperator {
+  position: fixed;
+  top: 11%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90vw;
+  height: 2px;
+  background-color: rgba(150, 158, 177, 0.252);
+  border-radius: 2px;
 }
-
 @keyframes scrollBounce {
   0% {
     transform: translateY(0);
@@ -182,7 +185,11 @@ body, html {
   top: 10vh;
   left: 50%;
   transform: translateX(-50%);
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Abstand zwischen Bild und Linie */
+  
 }
 
 .header-container {

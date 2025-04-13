@@ -1,4 +1,7 @@
 import { Hands } from "@mediapipe/hands";
+import "../css/validation.css";
+import { useContext } from "react";
+import { LanguageContext } from "../context/language-context"; // Context importieren
 
 export const runHandDetection = (dataUrl) => {
   return new Promise((resolve, reject) => {
@@ -31,8 +34,8 @@ export const runHandDetection = (dataUrl) => {
 
         hands.setOptions({
           maxNumHands: 1,  // Nur eine Hand erkennen
-          modelComplexity: 1,
-          minDetectionConfidence: 0.7,
+          modelComplexity: 0,
+          minDetectionConfidence: 0.5,
           minTrackingConfidence: 0.5,
         });
 
@@ -42,10 +45,8 @@ export const runHandDetection = (dataUrl) => {
             // Sicherstellen, dass multiHandLandmarks existiert und ein Array ist
             if (results && results.multiHandLandmarks && Array.isArray(results.multiHandLandmarks)) {
               if (results.multiHandLandmarks.length > 0) {
-                alert("Hand erkannt");
                 resolve(true);  // Hand erkannt
               } else {
-                alert("Keine Hand erkannt");
                 resolve(false); // Keine Hand erkannt
               }
             } else {
@@ -74,4 +75,58 @@ export const runHandDetection = (dataUrl) => {
     // DataURL in das Bild setzen
     img.src = dataUrl;
   });
+
+
 };
+
+const Validation = ({ validated, failed }) => {
+  const { language } = useContext(LanguageContext); // Sprachauswahl aus dem Kontext
+
+  const translations = {
+    de: {
+      retry: "Bitte Wiederholen",
+      success: "Super! Das Bild passt.",
+      checking: "Bild wird geprüft...",
+    },
+    en: {
+      retry: "Please Repeat",
+      success: "Great! The image is good.",
+      checking: "Checking image...",
+    }
+  };
+
+  const t = translations[language]; // Dynamische Auswahl der Übersetzungen
+
+  return (
+    <div className="val-container"> 
+      {failed ? (
+        <div className="wrapper">
+          <svg className="error-icon" viewBox="0 0 52 52">
+            <circle className="error-circle" cx="26" cy="26" r="25" fill="none" />
+            <path className="error-cross" d="M16 16 L36 36 M36 16 L16 36" />
+          </svg>
+          <p>{t.retry}</p>
+        </div>
+      ) : (
+        <>
+          {validated ? (
+            <div className="wrapper"> 
+              <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                <path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+              </svg>
+              <p>{t.success}</p>
+            </div>
+          ) : (
+            <div className="wrapper">
+              <div className="loader"></div>
+              <p>{t.checking}</p>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+};
+
+export default Validation;

@@ -4,8 +4,23 @@
   background-color: #182a43;
   box-sizing: border-box;
   font-family: "Raleway", serif;
+  
 }
 
+.participate-container {
+  position: relative;
+  top: 7vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px; /* Abstand zwischen Bild und Linie */
+}
+#top-seperator {
+  position: absolute;
+  top: 8vh;
+}
 
 .resetButton {
   position: relative;
@@ -108,7 +123,7 @@
   font-optical-sizing: auto;
   font-style: normal;
   font-weight: 250;
-  font-size: 3em;
+  font-size: 4vh;
   text-align: center;
   color: #cfe9ff;
   background-color: #ffffff00;
@@ -293,6 +308,30 @@
   }
 }
 
+.participate-footer {
+  width: 100%;
+  position: fixed;
+  bottom: 18vh;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 2vh;
+  color: #9d9d9d;
+}
+
+.participate-footer a {
+  color: #7b7e87;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.participate-footer a:hover {
+  text-decoration: underline;
+}
+
+
+
 /* Media Query für größere Bildschirme (ab 768px) */
 @media screen and (min-width: 768px) {
   .participateCard{
@@ -300,5 +339,11 @@
   }
   .participateCard p {
     font-size: 1.2em;
+  }
+  .participateText h1 {
+    font-size: 3em;
+  }
+  .participate-footer {
+    font-size: 1rem;
   }
 }

@@ -14,6 +14,7 @@ const FlippableCard = ({updateContentPage, changeScrollable,  cardImage, frontCo
       <div className="card-inner">
         <div className="card-front">
           <img className="card-image" src={cardImage} alt="Card" />
+          <div class="gradient-overlay"></div>
           <p className="front-headline">{frontContent}</p>
         </div>
       </div>

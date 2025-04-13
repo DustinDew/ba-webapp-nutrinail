@@ -42,7 +42,7 @@
 }
 
 .card-front {
-  background-color: rgb(38, 146, 255);
+  background-color: rgba(38, 146, 255, 0);
   opacity: 1 !important;
   color: #dcdcdc;
 }
@@ -65,8 +65,8 @@
   left: 50%; /* Horizontale Mitte */
   transform: translateX(-50%); /* Verschiebt die Überschrift um 50% ihres eigenen Breitenwerts, um sie genau zu zentrieren */
   text-align: center;
-  color: #ffffff;
-  font-size: 1.2em;
+  color: #1e1e1e;
+  font-size: 3vh;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.355);
 }
 
@@ -78,11 +78,24 @@
   border-radius: 8px;
   top: 0;
   left: 0;
-  opacity: 0.75;
+  opacity: 0.65;
+}
+
+.gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to top, rgba(44, 47, 59, 0.585), transparent);
+  border-radius: 8px;
 }
 
 /* Media Query für größere Bildschirme (ab 768px) */
 @media screen and (min-width: 768px) {
+  .front-headline{
+    font-size: 1em;
+  }
   .flippable-card {
     width: 200px !important; /* Größere Karten für größere Displays */
     height: 200px !important;
@@ -91,6 +104,9 @@
 
 /* Media Query für sehr große Bildschirme (ab 1024px) */
 @media screen and (min-width: 1024px) {
+  .front-headline{
+    font-size:1.5em;
+  }
   .flippable-card {
     width: 450px !important;
     height: 225px !important;

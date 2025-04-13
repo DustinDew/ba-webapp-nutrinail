@@ -1,11 +1,14 @@
-import "./css/global.css"
+import "./css/global.css";
 import ScrollPage from "./components/scroll-page.js";
+import { LanguageProvider } from "./context/language-context.js"; // ggf. Pfad anpassen
 
 const App = () => {
   return (
-    <div>
-      <ScrollPage/>
-    </div>
+    <LanguageProvider>
+      <div>
+        <ScrollPage />
+      </div>
+    </LanguageProvider>
   );
 };
 

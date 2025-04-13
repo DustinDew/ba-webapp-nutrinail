@@ -18,7 +18,7 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
   const [handLabel, setHandLabel] = useState("rh");
   const [detectionConfidence, setDetectionConfidence] = useState(0.4);
   const [restarted, setRestarted] = useState(false);
-  const [maxCameraRes, setMaxCameraRes] = useState({ width: 1280, height: 720 });
+  const [maxCameraRes, setMaxCameraRes] = useState({ width: 1280, height: 820 });
   const [overlayVisible, setOverlayVisible] = useState(true); // Overlay sichtbar initialisieren
   const [showLoader, setShowLoader] = useState(false);
   const [calDone, setCalDone] = useState(false);
@@ -27,7 +27,7 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
-  const { videoRef: videoRef2, canvasRef: canvasRef2, imageUrl, setImageUrl } = useCameraCapture();
+  const { videoRef: videoRef2, canvasRef: canvasRef2, imageUrl, setImageUrl, stopCamera } = useCameraCapture();
 
   let lastTime = 0; // Letzter verarbeiteter Frame-Zeitstempel
 
@@ -44,6 +44,9 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
   };
 
   const { startCameraStream, initializeCamera, stopCamera: stopCameraStream } = useInitializeCamera(
+    maxCameraResRef.current.width, 
+    maxCameraResRef.current.height,
+    canvasRef2,
     videoRef,
     setVideoSize,
     processVideoFrame
@@ -67,8 +70,7 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
     }
   }, [handSide]);
 
-  const tolerance = 10;
-  const targetAreaSize = 80;
+  const tolerance = 30;
 
   const [landmarkCoordinates, setLandmarkCoordinates] = useState([]);
 
@@ -111,6 +113,18 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
       canvas.height = video.videoHeight;
     
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Zielpositionen als graue Kreise zeichnen
+      targetPositions.forEach((target) => {
+        const targetX = target.x * canvas.width;
+        const targetY = target.y * canvas.height;
+
+        ctx.beginPath();
+        ctx.arc(targetX, targetY, 80, 0, 2 * Math.PI);
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.63)";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      });
     
       const landmarks = results.multiHandLandmarks[0];
       let allFingersInPosition = true;
@@ -127,11 +141,11 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
         const normalizedY = y / canvas.height;
     
         const fingerInPosition =
-          Math.abs(x - target.x * canvas.width) <= tolerance + 10 && Math.abs(y - target.y * canvas.height) <= tolerance + 40;
+          Math.abs(x - target.x * canvas.width) <= tolerance + 10 && Math.abs(y - target.y * canvas.height) <= tolerance + 30;
     
         // Zeichne den Punkt und ändere die Farbe, je nachdem, ob der Finger im Zielbereich ist oder nicht
         ctx.beginPath();
-        ctx.arc(x, y, 5, 0, 2 * Math.PI);
+        ctx.arc(x, y, 20, 0, 2 * Math.PI);
         ctx.fillStyle = fingerInPosition ? "green" : "red"; // Wenn im Zielbereich, grün, sonst rot
         ctx.fill();
     
@@ -250,34 +264,31 @@ const HandCalibration = ({ updateCalFinished, updateButtonStateLeft, updateCalSi
   return (
     <div className="camera-view">
       <div
-        className="hand-cal-camera-container"
-        style={{
-          width: videoSize.width,
-          height: videoSize.height,
-        }}
-      >
+        className="hand-cal-camera-container">
         {isActive && !calDone && (
           <>
             <video ref={videoRef} className="cal-camera-video" autoPlay playsInline muted />
             <canvas ref={canvasRef} className="cal-camera-canvas" />
             
-            {/* Fingerspitzen-SVG als Zielbereiche anzeigen */}
+            {/* Fingerspitzen-SVG als Zielbereiche anzeigen 
             {targetPositions.map((target, index) => (
               <FingerTipGrey
-              className="fingertip-target"
+              key={index}
+              className="cal-fingertip-target"
               style={{
                 position: "absolute",
-                left: `${target.x * videoSize.width}px`,
-                top: `${target.y * videoSize.height + 10}px`,
+                left: `${target.x * videoSize.width - 110}px`, // 110 = Hälfte der SVG-Breite
+                top: `${target.y * videoSize.height - 110}px`,
                 width: "220px",
                 height: "220px",
-                fill: "red", // Hier kannst du die Farbe setzen
+                fill: "red",
                 opacity: 0.5,
-                pointerEvents: "none", // Verhindert Interaktionen mit dem Bild
+                pointerEvents: "none",
               }}
             />
+           
+            ))} */}
             
-            ))}
           </>
         )}
         {overlayVisible && wrongHand && (

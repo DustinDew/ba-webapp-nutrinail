@@ -62,7 +62,14 @@
   background: none;
  
 }
-
+.content-back-button img {
+  background-color: #4d759868;
+  border-radius: 8px;
+  padding: 6px;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
 .content-container {
   margin-bottom: 180px;
   text-align: center;

@@ -20,26 +20,28 @@
   transform: translateX(-50%);
   border-radius: 8px;
   background-color: #cfe9ff00;
-  
+  width: 75vw;
 }
 
 .cal-camera-video {
   position: absolute;
-  width: 100%;
+  width:100%;
+  
   height: auto;
   z-index: 1;
   pointer-events: none;
-  border-radius: 0px;
+  border-radius: 5px;
   background-color: transparent;
 }
 
 .cal-camera-canvas {
   position: absolute;
   width: 100%;
+ 
   height: auto;
   z-index: 2;
   pointer-events: none;
-  border-radius: 0px;
+  border-radius: 5px;
   background-color: transparent;
   
 }
@@ -80,34 +82,6 @@
   background-color: transparent;
 }
 
-/* HTML: <div class="loader"></div> */
-.loader {
-  position: absolute;
-  top: 40vw;
-  width: 90px;
-  aspect-ratio: 1;
-  border: 15px solid #303030;
-  border-radius: 50%;
-  position: relative;
-  transform: rotate(45deg);
-  background-color: transparent;
-}
-.loader::before {
-  content: "";
-  position: absolute;
-  inset: -15px;
-  border-radius: 50%;
-  border: 15px solid #b4b4b4;
-  animation: l18 1.3s infinite linear;
-}
-@keyframes l18 {
-    0%   {clip-path:polygon(50% 50%,0 0,0    0,0    0   ,0    0   ,0    0   )}
-    25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0   ,100% 0   ,100% 0   )}
-    50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
-    75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0    100%,0    100%)}
-    100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0    100%,0    0   )}
-}
-
 .loader-text {
   position: absolute;
   top: 30vw;
@@ -131,7 +105,7 @@
   
 }
 
-.fingertip-target {
+.cal-fingertip-target {
   position: absolute;
   pointer-events: none; /* Verhindert Interaktionen mit den Zielbildern */
   transform: translate(-50%, -50%); /* Zentriert das SVG auf den Zielpunkten */
@@ -139,57 +113,16 @@
   z-index: 1000;
   background-color: transparent;
   width: 300px !important;
-  
-}
-.checkmark__circle {
-  stroke-dasharray: 166;
-  stroke-dashoffset: 166;
-  stroke-width: 2;
-  stroke-miterlimit: 10;
-  stroke: #7ac142;
-  fill: none;
-  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+  overflow: hidden;
 }
 
-.checkmark {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  display: block;
-  stroke-width: 2;
-  stroke: #fff;
-  stroke-miterlimit: 10;
-  margin: 10% auto;
-  box-shadow: inset 0px 0px 0px #7ac142;
-  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
-}
-
-.checkmark__check {
-  transform-origin: 50% 50%;
-  stroke-dasharray: 48;
-  stroke-dashoffset: 48;
-  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
-}
-
-@keyframes stroke {
-  100% {
-    stroke-dashoffset: 0;
-  }
-}
-@keyframes scale {
-  0%, 100% {
-    transform: none;
-  }
-  50% {
-    transform: scale3d(1.1, 1.1, 1);
-  }
-}
-@keyframes fill {
-  100% {
-    box-shadow: inset 0px 0px 0px 50px #7ac142;
-  }
-}
 .loading-screen-cal {
   background-color: transparent;
   margin-top: 50px;
+}
+
+@media screen and (max-width: 385px) {
+  .cal-fingertip-target {
+    transform: translate(-50%, -60%) scale(0.8);
+  }
 }

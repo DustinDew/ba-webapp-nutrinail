@@ -1,16 +1,17 @@
 import { useEffect, useCallback, useRef } from "react";
 
-const useInitializeCamera = (videoRef, setVideoSize, processVideoFrame) => {
+const useInitializeCamera = (maxWidth, maxHeight, canvasRef, videoRef, setVideoSize, processVideoFrame) => {
   const streamRef = useRef(null);
 
   const startCameraStream = useCallback(async () => {
     try {
       const constraints = {
         video: {
-          facingMode: "environment",
-          width: { ideal: 400 }, // Maximale Auflösung für spätere Skalierung
-          height: { ideal: 300 },
+          facingMode: { ideal: "environment" },
+          width: { ideal: maxWidth},
+          height: { ideal: maxHeight},
         },
+        audio: false,
       };
 
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -20,52 +21,60 @@ const useInitializeCamera = (videoRef, setVideoSize, processVideoFrame) => {
       console.error("Fehler beim Zugriff auf die Kamera:", error);
       return null;
     }
-  }, []);
+  }, [maxHeight, maxWidth]);
 
-  const initializeCamera = useCallback(async (hands) => {
+  const initializeCamera = useCallback(async (handsInstance) => {
     const stream = await startCameraStream();
     if (!stream) return;
-  
-    const video = videoRef.current;
-    if (video) {
-      video.srcObject = stream;
-      video.onloadedmetadata = async () => {
-        setVideoSize({
-          width: video.videoWidth,
-          height: video.videoHeight,
-        });
-        video.play();
-  
-        // Erhalte den ersten Video-Track aus dem Stream
-        const [videoTrack] = stream.getVideoTracks();
-        if (videoTrack) {
-          try {
-            // Ändere die Auflösung mittels applyConstraints
-            await videoTrack.applyConstraints({
-              width: { ideal: 400 },
-              height: { ideal: 300 }
-            });
-            console.log("Auflösung wurde auf 640x480 angepasst");
-          } catch (err) {
-            console.error("Fehler beim Anpassen der Auflösung:", err);
-          }
-        }
-  
-        // Starte die Verarbeitung der Videoframes (zum Beispiel für MediaPipe)
-        setTimeout(() => {
-          processVideoFrame(hands);
-        }, 500);
-      };
-    }
-  }, [videoRef, setVideoSize, processVideoFrame, startCameraStream]);
-  
 
-  const stopCamera = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.srcObject = stream;
+
+    const onVideoReady = async () => {
+      await video.play();
+      const { videoWidth, videoHeight } = video;
+      setVideoSize({ width: videoWidth, height: videoHeight });
+
+      console.log("Video-Stream gestartet:", videoWidth, videoHeight);
+
+      requestAnimationFrame(() => {
+        processVideoFrame(handsInstance);
+      });
+    };
+
+    video.onloadeddata = onVideoReady;
+  }, [startCameraStream, videoRef, setVideoSize, processVideoFrame]);
+
+  const stopCamera = useCallback(async () => {
     if (streamRef.current) {
-      streamRef.current.getTracks().forEach((track) => track.stop());
+      const tracks = streamRef.current.getTracks();
+      tracks.forEach((track) => track.stop());
       streamRef.current = null;
     }
-  }, []);
+
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+  }, [videoRef]);
+
+  const capturePhoto = useCallback(() => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+
+    if (!video || !canvas) {
+      console.warn("Video- oder Canvas-Element nicht vorhanden.");
+      return null;
+    }
+
+    const context = canvas.getContext("2d");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    return canvas.toDataURL("image/jpeg");
+  }, [videoRef, canvasRef]);
 
   useEffect(() => {
     return () => {
@@ -73,7 +82,7 @@ const useInitializeCamera = (videoRef, setVideoSize, processVideoFrame) => {
     };
   }, [stopCamera]);
 
-  return { initializeCamera, stopCamera, startCameraStream };
+  return { initializeCamera, stopCamera, startCameraStream, capturePhoto };
 };
 
 export default useInitializeCamera;

@@ -3,100 +3,100 @@
   display: flex;
   align-items: center;
   height: 8vh;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding: 0 10px;
   background-color: transparent;
 }
 
 .settings-back-button {
-  color: #e5e5e5;
   border: none;
   background: none;
-  
-  z-index: 1; /* damit er nicht vom H1 überdeckt wird */
+  z-index: 1;
 }
 .settings-back-button img {
-  background-color: #4d759837;
-  border-radius: 5px;
-  padding: 5px;
+  background-color: #4d759868;
+  border-radius: 8px;
+  padding: 6px;
   transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(8, 10, 27, 0.267);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
 }
+.settings-back-button img:hover {
+  background-color: #5f88b4;
+}
+
 .settings-h1 {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   font-size: 4vh;
-  color: #dfdfdf;
-  font-weight: 300;
-  margin: 0; /* sicherstellen, dass kein Abstand entsteht */
-}
-.settings-list {
-  
-  text-align: center;
-  color: #dfdfdf;
-  background-color: transparent;
-  padding-top: 10px;
+  color: #ffffff;
+  font-weight: 400;
+  margin: 0;
 }
 
-.process-plan h2 {
-  font-size: 1.4rem; /* Kleiner als vorher */
-  font-weight: 300;
-  margin-bottom: 12px; /* Weniger Abstand */
-  color: #dfdfdf;
+.settings-list {
+  text-align: center;
+  color: #ffffff;
+  padding-top: 20px;
 }
 
 .settings {
   display: flex;
-  height: 60vh;
-  padding: 5px;
   flex-direction: column;
-  gap: 2opx; /* Weniger Abstand zwischen den Schritten */
-  background-color: rgb(13, 25, 42);
-  border-radius: 8px;
+  gap: 20px;
+  background-color: #0f1d33;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 0 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .setting {
   display: flex;
-  align-items: center;
-  background: rgba(49, 75, 105, 0); /* Transparente Karten-Optik */
-  padding: 6px; /* Weniger Innenabstand */
-  border-radius: 6px;
-  padding: 10px;
+  flex-direction: column;
+  background: #1b2e4a;
+  border-radius: 10px;
+  padding: 16px;
+  transition: background-color 0.3s ease;
 }
-
-.step-number {
-  width: 35px;
-  height: 35px;
-  background: rgb(216, 163, 30); /* Passend zur "on"-Kugel */
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 12px;
-  flex-shrink: 0;
-}
-.step-content {
-  border-radius: 5px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.331);
-}
-.step-content h3 {
-  font-size: 1rem; /* Kleinere Überschrift */
-  margin-bottom: 2px; /* Weniger Abstand */
-  color: #dfdfdf;
-  text-align: left;
-  padding-left: 20px;
+.setting:hover {
+  background-color: #223a5a00;
 }
 
 .setting-content {
   width: 100%;
-  padding: 20px;
-  font-size: 2.5vh !important; /* Kleinere Beschreibung */
-  color: #dfdfdf;
-  line-height: 1.2; /* Weniger Zeilenhöhe */
+  font-size: 2.4vh;
+  color: #ffffff;
+  line-height: 1.4;
   text-align: left;
-  border-radius: 5px;
+  background-color: transparent;
+}
+.setting-content p {
+  background-color: transparent;
+}
+.language-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  background-color: transparent;
+}
+
+.language-buttons button {
+  padding: 10px 16px;
+  background-color: #304c73;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.language-buttons button:hover {
+  background-color: #3a5d8a;
+  transform: scale(1.03);
+}
+.language-buttons button.active {
+  background-color: #d8a31e;
+  color: #000;
 }
