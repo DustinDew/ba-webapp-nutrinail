@@ -3,7 +3,7 @@ import { Hands } from "@mediapipe/hands";
 import "../css/hand-calibration.css";
 import useCameraCapture from "./camera-capture";
 import useInitializeCamera from "./useInitializeCamera";
-import { ReactComponent as FingerTipGrey } from "../assets/fingertip-grey.svg";
+
 
 
 

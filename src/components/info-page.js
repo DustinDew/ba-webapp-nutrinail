@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, {useEffect, useState, useContext } from "react";
 import "../css/info-page.css";
 import FlippableCard from "./flip-card";
 import ContentPage from "./content-page";
@@ -46,6 +46,7 @@ const InfoPage = ({ changeShowScrollIndc, changeScrollable, firstScroll }) => {
       setTeamPage(!teamPage);
     }
   }
+
   const translations = {
     de: {
       slogan: "Die Zukunft deiner Gesundheit liegt im",

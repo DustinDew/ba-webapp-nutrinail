@@ -54,7 +54,7 @@
 
 .top-bar .content-back-button {
   position: absolute;
-  left: 0vw;
+  left: -1vw;
   
   
   color: #e5e5e5;
@@ -76,7 +76,7 @@
 }
 
 .content-container p {
-  font-size: 1em;
+  font-size: 2vh;
   color: #ffffff;
   margin: 20px auto;
   word-spacing: 3px;
@@ -89,7 +89,7 @@
   text-align: center;
   color: #ffffff;
   margin-bottom: 40px;
-  font-size: 1.8em;
+  font-size: 3.5vh;
 }
 
 .image-container {

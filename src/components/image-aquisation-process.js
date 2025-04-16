@@ -344,7 +344,6 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
   useEffect(() => {
     maxCameraResRef.current = maxCameraRes;
     const init = async () => {
-     
       const stream = await startCameraStream();
       if (stream && videoRef.current) {
         videoRef.current.srcObject = stream;
@@ -363,6 +362,8 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
       updateProcessRestart();
     }
   }, [start, restarted, processRestart, maxCameraRes, startCameraStream, firstStart, changeStart, startProcess, updateProcessRestart]);
+
+
 
   return (
     <div className="camera-view">
@@ -392,7 +393,7 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
           {/* Unsichtbares Video und Canvas für Hintergrundverarbeitung */}
           <canvas className="hidden" ref={canvasRef2} style={{ display: "none" }}></canvas>
         </div>
-  
+          
         {/* Weitere UI-Elemente */}
         {!isLoading && imageUrl && (
           <>
@@ -400,7 +401,6 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
               <div className="captured-image-container">
                 <img src={imageUrl} alt="Captured" />
               </div>
-              
              <div id="validation"><Validation failed={valFail} validated={validated}/></div>
             </div>
             {!handInPosition && (
