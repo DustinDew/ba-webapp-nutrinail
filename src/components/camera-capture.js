@@ -84,3 +84,5 @@ const useCameraCapture = () => {
 };
 
 export default useCameraCapture;
+
+
