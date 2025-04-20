@@ -56,8 +56,8 @@
 
 /* Checkmark-Animation */
 .checkmark {
-  width: 40px;
-  height: 40px;
+  width: 5vh;
+  height: 5vh;
   border-radius: 50%;
   display: block;
   stroke-width: 2;

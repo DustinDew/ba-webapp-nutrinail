@@ -74,13 +74,6 @@ const SettingsPage = ({
                 </div>
               </div>
             </div>
-
-            <div className="setting">
-              <div className="plain-language"></div>
-              <div className="setting-content">
-                {translations[language].plainLanguage}
-              </div>
-            </div>
           </div>
         </div>
       </div>

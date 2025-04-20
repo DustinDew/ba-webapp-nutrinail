@@ -25,6 +25,7 @@
 
 .camera-video {
   position: absolute;
+  top:15px;
   width: 100%;
   
   z-index: 1;
@@ -35,6 +36,7 @@
 
 .camera-canvas {
   position: absolute;
+  top:15px;
   width: 100%;
   
   z-index: 2;
@@ -124,42 +126,49 @@
 .feedback2 {
   position: inherit;
   top: 0vw;
-  
+  width: 90%;
+  height: 10vh;
   z-index: 10;
   color: white;
-  font-size: 1.5em; /* Kleinere Schriftgröße */
+  font-size: 2.5vh; /* Kleinere Schriftgröße */
   font-weight: bold;
   padding: 10px;
   background-color: rgba(0, 0, 0, 0);
   border-radius: 5px;
-  max-width: 90%;
   text-align: center;
 }
 .feedback1 p {
   background-color: #ffffff00;
-  font-size: 1.5em;
   color: rgb(237, 71, 0);
   z-index: 100;
 }
 .feedback2 p {
-  background-color: #ffffff00;
+  background-color: #00000047;
   font-size: 1.5em;
+  border-radius: 8px;
+  padding: 10px;
 }
 .captured-image-container {
   position: absolute;
-  top: 0;
+  top: 15px;
   left: 50%;
   transform: translateX(-50%);
-  width: 70%;
+  
   height: auto;
   z-index: 1;
+  background-color: transparent;
 }
 .captured-image-container img {
-  width: 100%;
-  display: block;
+  height: 55vh;
+  
   border-radius: 8px;
+  background-color: transparent;
 }
-
+#cap-sep {
+  width: 75vw;
+  margin-top:2vh;
+  background-color: #66717d4c;
+}
 #validation {
   position: relative;
   left: 50%;
@@ -169,12 +178,15 @@
   z-index: 2;
   margin-top: 1rem;
   border-radius: 5px;
-  background-color: rgb(73, 83, 101);
+  background-color: rgba(5, 10, 19, 0.705);
 }
 #val-wrapper {
   position: relative;
+
   padding-top: 100%;
   background-color: transparent;
+
+  border-radius: 8px;
 }
 .startButton {
   width: 120px;
@@ -228,16 +240,6 @@
   background-color: transparent;
 }
 
-.captured-image-wrapper img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  border-radius: 8px;
-  background-color: transparent;
-}
-.captured-image-container {
-  background-color: transparent;
-}
 .loading-screen {
   position: absolute;
   top: 15vh;
@@ -272,7 +274,18 @@
 
 }
 
-
+@media (max-width: 385px) {
+  .captured-image-container {
+    top:-2vh
+  }
+  .captured-image-container img {
+    height: 55vh;
+    
+  }
+  #validation {
+    margin-top: 0rem;
+  }
+}
 /* Responsive Anpassungen */
 @media (max-width: 500px) {
   .camera-video, .camera-canvas {
@@ -345,4 +358,8 @@
   .fingertip-target {
     transform: translate(-50%, -80%) scale(1);
   }
+}
+
+.finger-point {
+  transition: transform 1s ease-out;
 }

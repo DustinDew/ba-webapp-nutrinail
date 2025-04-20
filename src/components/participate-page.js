@@ -130,18 +130,22 @@ const ParticipatePage = ({changeShowScrollIndc, start, changeStart, changeScroll
         </>
       ) : (
         <>
-          <div className="finished-container">
-            <div className="thx">{t.thanks}</div>
-            <button className="exit-button" onClick={resetProcess}>{t.exit}</button>
+          <div class="finished-container">
+            <h1>Vielen Dank für deine Teilnahme!</h1>
+            <p>Deine Daten wurden erfolgreich gespeichert.</p>
+            
+            <div class="finished-actions">
+              <button class="exit-button" onClick={resetProcess}>Beenden</button>
+            </div>
           </div>
         </>
       )}
       {participateContentPage && (
         <ContentPage
           bannerImg={helpRobot}
+          title={"Teilnahmeinfos"}
           contentBody={
             <>
-             <h2>{t.title}</h2>
               <p>{t.description1}</p>
               <p>{t.description2}</p>
               <p>{t.description3}</p>

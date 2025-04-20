@@ -199,3 +199,4 @@ const Dialog = ({ changeShowScrollIndc, updateTargetCoordsLeft, updateTargetCoor
   );
 };
 
+export default Dialog;

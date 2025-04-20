@@ -53,18 +53,18 @@ const InfoPage = ({ changeShowScrollIndc, changeScrollable, firstScroll }) => {
       discover: "Entdecke NutriNAIL",
       whoAreWe: "Wer sind wir?",
       comingSoon: "Coming soon",
-      h2: "NutriNAIL: Was deine Fingernägel über deine Gesundheit verraten",
+      h2: "Unser Projekt",
       p1: "NutriNAIL ist ein Forschungsprojekt der Hochschule Fulda, das untersucht, wie das Aussehen und die Zusammensetzung von Fingernägeln Rückschlüsse auf die Gesundheit geben können. Ziel des Projekts ist es, Zusammenhänge zwischen den Merkmalen der Nägel und verschiedenen gesundheitlichen Aspekten zu erforschen, um die Aussagen zu überprüfen, die oft über die Nägel gemacht werden.",
       p2: "Im Rahmen des Projekts sammeln wir Bilder von Freiwilligen, die dazu verwendet werden, eine KI zu trainieren. Diese KI soll in der Lage sein, Muster und Strukturen in den Nägeln zu erkennen und auf dieser Basis Einschätzungen zur Gesundheit der Person zu liefern.",
       p3: "Obwohl sich das Projekt noch in der Anfangsphase befindet, zeigen erste Ansätze vielversprechende Ergebnisse, die die Gesundheitsdiagnostik in der Zukunft revolutionieren könnten. NutriNAIL könnte sowohl Ärzten und Therapeuten neue diagnostische Hilfsmittel bieten als auch den Menschen helfen, ein besseres Verständnis für ihre eigene Gesundheit zu entwickeln.",
       p4: "Neugierig geworden? Nimm an unserem Projekt teil und lade einfach Bilder deiner Nägel auf unserer Webseite hoch. Es dauert nur wenige Minuten und du unterstützt uns dabei, wertvolle wissenschaftliche Erkenntnisse zu gewinnen!"
     },
     en: {
-      slogan: "The future of your health is in the",
+      slogan: "The future of your health lies in the",
       discover: "Discover NutriNAIL",
       whoAreWe: "Who are we?",
       comingSoon: "Coming soon",
-      h2: "NutriNAIL: What your nails reveal about your health",
+      h2: "Our Project",
       p1: "NutriNAIL is a research project at Fulda University of Applied Sciences that investigates how the appearance and composition of fingernails can provide insight into a person's health. The aim is to explore connections between nail characteristics and various health factors, to verify common assumptions about nails.",
       p2: "As part of the project, we collect images from volunteers to train an AI. This AI aims to identify patterns and structures in nails and assess possible health indicators.",
       p3: "Although the project is still in an early phase, initial findings are promising and could revolutionize health diagnostics in the future. NutriNAIL could provide new diagnostic tools for healthcare professionals and help individuals better understand their own health.",
@@ -92,7 +92,7 @@ const InfoPage = ({ changeShowScrollIndc, changeScrollable, firstScroll }) => {
       <p className="intro-text">
       {t.slogan}  <span className="colored-detail">Det</span>
         <span className="colored-letter">ai</span>
-        <span className="colored-detail">l.</span>
+        <span className="colored-detail">ls.</span>
       </p>
 
       <div className="welcomeText">
@@ -127,9 +127,9 @@ const InfoPage = ({ changeShowScrollIndc, changeScrollable, firstScroll }) => {
       {infoContentPage && (
         <ContentPage
           bannerImg={bannerImg}
+          title={"Unser Projekt"}
           contentBody={
             <>
-              <h2>{t.h2}</h2>
               <p>{t.p1}</p>
               <p>{t.p2}</p>
               <p>{t.p3}</p>
@@ -145,6 +145,7 @@ const InfoPage = ({ changeShowScrollIndc, changeScrollable, firstScroll }) => {
       {teamPage && (
         <ContentPage
           bannerImg={team}
+          title={"Unser Team"}
           contentBody={
             <>
               <h1 style={{ color: 'white' }}>Coming soon</h1>

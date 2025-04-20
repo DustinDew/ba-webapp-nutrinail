@@ -347,3 +347,52 @@
     font-size: 1rem;
   }
 }
+
+.finished-container {
+  background-color: #0d192a;
+  margin: 50px auto;
+  padding: 25px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 85vw;
+  text-align: center;
+}
+
+.finished-container h1 {
+  font-family: "Raleway", serif;
+  font-size: 2.2em;
+  color: #cfe9ff;
+  margin-bottom: 10px;
+  background-color: transparent;
+}
+
+.finished-container p {
+  font-family: "Raleway", serif;
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #dcdcdc;
+  margin: 10px 0;
+  background-color: transparent;
+}
+
+.finished-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 40px;
+  background-color: transparent;
+}
+
+.exit-button,
+.survey-button {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.exit-button:hover {
+  background-color: #1b5e9e;
+}
+
+.survey-button:hover {
+  background-color: #c3913b;
+}

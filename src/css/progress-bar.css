@@ -1,6 +1,6 @@
 .progress-bar {
   position: absolute;
-  top: 50px;
+  top: 7vh;
   left: 50%;
   transform: translateX(-50%);
   gap: 0px; /* Abstand zwischen Repeat- und Continue-Button */
@@ -10,18 +10,19 @@
   align-items: center;
 }
 .progress-square {
-  width: 35px;
-  height: 35px;
+  width: 4vh;
+  height: 4vh;
   border-radius: 50%;
   background-color: rgb(73, 83, 101);
   margin-left: 10px;
   margin-right: 10px;
   z-index: 2;
-  color: #ffffff;
-  text-align: center;
-  line-height: 35px;
-  font-size: 0.9em;
+  color: #d5d5d5;
+  font-size: 1em;
   font-family: "Roboto";
+  display: flex;                  /* NEU */
+  justify-content: center;       /* NEU */
+  align-items: center; 
 }
 
 .progress-square.active {
@@ -30,26 +31,30 @@
 }
 
 .progress-square-1 {
-
-  width: 35px;
-  height: 35px;
+  width: 4vh;
+  height: 4vh;
   border-radius: 50%;
   background-color: rgb(73, 83, 101);
   margin-left: 10px;
   margin-right: 10px;
   z-index: 2;
-  color: #ffffff;
-  text-align: center;
-  line-height: 35px;
+  color: #d5d5d5;
   font-size: 1em;
   font-family: "Roboto";
+  display: flex;                  /* NEU */
+  justify-content: center;       /* NEU */
+  align-items: center;           /* NEU */
 }
 
 .progress-square-1.active {
   animation: pulseSquare 0.5s ease-in-out 1 forwards;
   
 }
-
+.progress-icon {
+  background-color: transparent;
+  width: 4vh;
+  height: 4vh;
+}
 .progress-line {
   transform: scaleX(0);
   height: 5px;

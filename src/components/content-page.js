@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../css/content-page.css";
 import backIcon from "../assets/back-icon.svg";
 
-const ContentPage = ({ bannerImg, contentBody, changeShowScrollIndc, changeScrollable, updateInfoContentPage, showContent }) => {
+const ContentPage = ({ title, bannerImg, contentBody, changeShowScrollIndc, changeScrollable, updateInfoContentPage, showContent }) => {
   const [disable, setDisable] = useState(false);
 
   const disableContentPage = () => {
@@ -29,6 +29,7 @@ const ContentPage = ({ bannerImg, contentBody, changeShowScrollIndc, changeScrol
           <button className="content-back-button" onClick={disableContentPage}>
             <img src={backIcon} alt="back" />
           </button>
+          <h1 className="settings-h1">{title}</h1>
         </div>
         <div className="content-container">
           <div className="image-container">

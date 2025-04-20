@@ -63,17 +63,17 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
   const targetPositions = useMemo(() => {
     if (handSide === "Right") {
       return [
-        { x: 0.86, y: 0.35 },
-        { x: 0.63, y: 0.3 },
-        { x: 0.4, y: 0.32 },
-        { x: 0.15, y: 0.40 },
+        { x: 0.86, y: 0.3 },
+        { x: 0.63, y: 0.25 },
+        { x: 0.4, y: 0.27 },
+        { x: 0.15, y: 0.35 },
       ];
     } else if (handSide === "Left") {
       return [
-        { x: 0.15, y: 0.37 },
-        { x: 0.4, y: 0.3 },
-        { x: 0.63, y: 0.32 },
-        { x: 0.85, y: 0.4 },
+        { x: 0.15, y: 0.32 },
+        { x: 0.4, y: 0.25 },
+        { x: 0.63, y: 0.27 },
+        { x: 0.85, y: 0.35 },
       ];
     }
   }, [handSide]);
@@ -134,19 +134,29 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
       minTrackingConfidence: 0.7
     });
   
+    const minRadius = 10;
+    const animationDuration = 1000;
+    const animationSpeed = 1 / (animationDuration / 33); // ca. 30 FPS
+  
+    const fingerVisuals = Array(5).fill().map(() => ({ radius: minRadius }));
+    const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
+  
     const initialTolerance = 100;
     const finalTolerance = 50;
   
-    const fingerState = [
-      { locked: false, tolerance: initialTolerance, target: { ...targetPositions[0] } },
-      { locked: false, tolerance: initialTolerance, target: { ...targetPositions[1] } },
-      { locked: false, tolerance: initialTolerance, target: { ...targetPositions[2] } },
-      { locked: false, tolerance: initialTolerance, target: { ...targetPositions[3] } },
-      { locked: false, tolerance: initialTolerance, target: { ...targetPositions[4] } }, // Daumen hinzugefügt
-    ];
-  
+    const fingerState = targetPositions.map(pos => ({
+      locked: false,
+      tolerance: initialTolerance,
+      target: { ...pos }
+    }));
+    fingerState.push({
+      locked: false,
+      tolerance: initialTolerance,
+      target: { x: 0.5, y: 0.5 } // Mittelpunkt als Standardposition für den Daumen
+    });
     let targetsLocked = false;
     let captureTimeout;
+    let animationActive = false;
   
     hands.onResults(results => {
       const canvas = canvasRef.current;
@@ -158,6 +168,7 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
         setWrongHand(false);
         setShowOverlay(true);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        animationActive = false;
         return;
       }
   
@@ -165,6 +176,7 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
         setWrongHand(true);
         setHandInPosition(false);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        animationActive = false;
         return;
       }
   
@@ -177,33 +189,40 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
       const landmarks = results.multiHandLandmarks[0];
       let inPosition = false;
   
-      // Überprüfen und Zeichnen des Zielkreises für den Daumen
       if (["rd", "ld"].includes(handLabel)) {
+        // Nur Daumen-Modus
         const { x, y } = landmarks[4]; // Daumen
         const px = x * canvas.width;
         const py = y * canvas.height;
         const targetX = canvas.width / 2;
-        const targetY = canvas.height / 2;
+        const targetY = canvas.height / 3;
+        let tolerance = fingerState[4].tolerance;
   
-        let tolerance = fingerState[4].tolerance; // Toleranz für den Daumen
         ctx.beginPath();
-        ctx.arc(targetX, targetY, tolerance, 0, 2 * Math.PI); // Daumen Zielkreis
-        ctx.strokeStyle = "rgb(255, 255, 255)";
+        ctx.arc(targetX, targetY, tolerance, 0, 2 * Math.PI);
+        ctx.strokeStyle = "white";
         ctx.lineWidth = 2;
         ctx.stroke();
   
-        ctx.beginPath();
-        ctx.arc(px, py, 20, 0, 2 * Math.PI);
-        ctx.fillStyle = Math.abs(px - targetX) <= tolerance && Math.abs(py - targetY) <= tolerance ? "green" : "red";
-        ctx.fill();
-  
-        // Toleranz für den Daumen anpassen, wenn er in Position ist
+        const distance = Math.hypot(px - targetX, py - targetY);
+        const normalized = Math.min(distance / tolerance, 1);
+
+        const radius = inPosition ? tolerance : 10 + (tolerance - 10) * (1 - normalized);
         if (Math.abs(px - targetX) <= tolerance && Math.abs(py - targetY) <= tolerance) {
           fingerState[4].tolerance = finalTolerance;
+          inPosition = true;
         }
+        ctx.beginPath();
+        ctx.arc(px, py, radius, 0, 2 * Math.PI);
+        ctx.fillStyle = inPosition ? "green" : "red";
+        ctx.fill();
   
-        inPosition = Math.abs(px - targetX) <= tolerance && Math.abs(py - targetY) <= tolerance;
+
+  
+        animationActive = inPosition;
+  
       } else {
+        // Alle Finger-Modus
         const fingers = [8, 12, 16, 20];
         const currentCheck = fingers.map((idx, i) => {
           const { x, y } = landmarks[idx];
@@ -214,30 +233,32 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
           const tx = state.target.x * canvas.width;
           const ty = state.target.y * canvas.height;
   
-          let tolerance = state.tolerance; // Dynamische Toleranz für die Finger
+          let tolerance = state.tolerance;
           const inTarget = Math.abs(px - tx) <= tolerance && Math.abs(py - ty) <= tolerance;
   
-          // Zeichne Ziel (Verkleinert je nachdem ob der Finger in Position ist)
           ctx.beginPath();
-          ctx.arc(tx, ty, tolerance, 0, 2 * Math.PI); // Dynamischer Zielkreis
-          ctx.strokeStyle = "rgb(255, 255, 255)";
+          ctx.arc(tx, ty, tolerance, 0, 2 * Math.PI);
+          ctx.strokeStyle = "white";
           ctx.lineWidth = 2;
           ctx.stroke();
   
-          // Zeichne Finger
+          const targetRadius = tolerance;
+          const currentVisual = fingerVisuals[i];
+          const destinationRadius = animationActive ? targetRadius : minRadius;
+          currentVisual.radius = lerp(currentVisual.radius, destinationRadius, animationSpeed);
+  
           ctx.beginPath();
-          ctx.arc(px, py, 20, 0, 2 * Math.PI);
+          ctx.arc(px, py, currentVisual.radius, 0, 2 * Math.PI);
           ctx.fillStyle = inTarget ? "green" : "red";
           ctx.fill();
   
           return {
             inInitialZone: Math.abs(px - tx) <= initialTolerance && Math.abs(py - ty) <= initialTolerance,
             currentX: x,
-            currentY: y,
+            currentY: y
           };
         });
   
-        // Wenn alle gleichzeitig im initialen Bereich und noch nicht gelockt
         if (!targetsLocked && currentCheck.every(c => c.inInitialZone)) {
           currentCheck.forEach((c, i) => {
             fingerState[i].locked = true;
@@ -247,7 +268,6 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
           targetsLocked = true;
         }
   
-        // Danach prüfen, ob alle in ihrem (nun gelockten) finalen Bereich sind
         const allInFinalZone = fingers.every((idx, i) => {
           const { x, y } = landmarks[idx];
           const px = x * canvas.width;
@@ -259,23 +279,24 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
         });
   
         inPosition = allInFinalZone;
+        animationActive = inPosition;
       }
   
       setHandInPosition(inPosition);
+  
       if (inPosition) {
-        // Setze den Timeout nur, wenn alle Finger in Position sind und das Bild noch nicht aufgenommen wurde
-        if (!captureTimeout && inPosition) {
+        if (!captureTimeout &&inPosition) {
           captureTimeout = setTimeout(() => {
             fingerState.forEach(state => {
               state.locked = false;
               state.tolerance = initialTolerance;
             });
             targetsLocked = false;
+            animationActive = false;
             stopProcessAndCapture();
-          }, 1000); // Warte 1 Sekunde, bevor das Bild aufgenommen wird
+          }, 1000);
         }
       } else {
-        // Wenn die Hand nicht in Position ist, setze den Timeout zurück
         if (captureTimeout) {
           clearTimeout(captureTimeout);
           captureTimeout = null;
@@ -285,6 +306,7 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
   
     return hands;
   }, [handLabel, handSide, stopProcessAndCapture, targetPositions]);
+  
   
   
 
@@ -369,6 +391,7 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
     <div className="camera-view">
       <div className="camera-card">
         <ProgressBar index={savedImg.length}/>
+        <div className="seperator" id="cap-sep"></div>
         <div className="camera-container">
           {isActive && (
             <>
@@ -404,10 +427,13 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
              <div id="validation"><Validation failed={valFail} validated={validated}/></div>
             </div>
             {!handInPosition && (
+              
               <div className="controls">
+                
                 {processStartCount >= 1 && !isActive && (
                   <>
                     <div className="button-row">
+                    
                       <button className="repeatButton" onClick={repeatCapture}>
                         {t.repeat}
                       </button>
@@ -432,3 +458,5 @@ const ImageAquisation = ({ updateFinished, start, changeStart, processRestart, u
 };
 
 export default ImageAquisation;
+const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
+

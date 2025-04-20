@@ -28,10 +28,11 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 4vh;
+  font-size: 3.5vh;
   color: #ffffff;
   font-weight: 400;
   margin: 0;
+  background-color: transparent;
 }
 
 .settings-list {
@@ -41,14 +42,15 @@
 }
 
 .settings {
+  width: 85vw;
   display: flex;
   flex-direction: column;
   gap: 20px;
   background-color: #0f1d33;
   border-radius: 12px;
   padding: 20px;
-  margin: 0 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  margin: 0 7px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.283);
 }
 
 .setting {
@@ -58,9 +60,6 @@
   border-radius: 10px;
   padding: 16px;
   transition: background-color 0.3s ease;
-}
-.setting:hover {
-  background-color: #223a5a00;
 }
 
 .setting-content {
